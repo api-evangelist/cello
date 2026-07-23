@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: Cello Events New Users API
+  description: API for Cello referral platform
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+- url: https://api.cello.so
+- url: https://api.sandbox.cello.so
+security:
+- bearerAuth: []
+tags:
+- name: New Users
+paths:
+  /new-users/{productUserId}/reward:
+    get:
+      description: Retrieve details on eligibility for the new user reward (discount) and referral information.
+      parameters:
+      - name: productUserId
+        in: path
+        required: true
+        description: The Id of the user you want to check
+        schema:
+          type: string
+      responses:
+        '200':
+          description: New user reward and eligibility information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardEligibilityResponse'
+              examples:
+                eligible:
+                  summary: New user is eligible for a reward
+                  value:
+                    eligible: true
+                    reward:
+                      type: standard
+                      interval: month
+                      intervalCount: 3
+                      percentage: 20
+                    signupId: signup_abc123
+                    signupAt: '2024-01-15T10:30:00Z'
+                    referralUcc: ucc_xyz789
+                    campaignId: campaign_id_123
+                    campaignRevision: v2
+                not-eligible:
+                  summary: New user is not eligible for a reward
+                  value:
+                    eligible: false
+                    reward: null
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+      tags:
+      - New Users
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    RewardEligibilityResponse:
+      type: object
+      required:
+      - eligible
+      properties:
+        eligible:
+          type: boolean
+          description: Whether the user is eligible for a new user discount
+        reward:
+          oneOf:
+          - $ref: '#/components/schemas/Reward'
+          - type: 'null'
+          description: Discount details if eligible
+        signupId:
+          type: string
+          description: Unique identifier for the signup record
+        signupAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the user signed up
+        referralUcc:
+          type: string
+          description: The UCC (Unique Customer Code) that referred this user
+        campaignId:
+          type: string
+          description: The campaign ID associated with the signup
+        campaignRevision:
+          type: string
+          description: The campaign revision used for the reward calculation
+    Reward:
+      type: object
+      required:
+      - type
+      - interval
+      properties:
+        type:
+          type: string
+          enum:
+          - standard
+          - custom
+          description: '"standard" or "custom" discount type'
+        interval:
+          type: string
+          description: Always "month" (billing interval)
+        intervalCount:
+          type: number
+          nullable: true
+          description: Number of months the discount applies (null for custom)
+        percentage:
+          type: number
+          nullable: true
+          description: Discount percentage (null for standard)
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-mint.mcp.enabled: true

@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: Cello Events Token API
+  description: API for Cello referral platform
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+- url: https://api.cello.so
+- url: https://api.sandbox.cello.so
+security:
+- bearerAuth: []
+tags:
+- name: Token
+paths:
+  /token:
+    post:
+      description: Obtain accessToken & refreshToken using your accessKeyId and secretAccessKey, or obtain a new accessToken using a refreshToken.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/TokenRequest'
+              - $ref: '#/components/schemas/RefreshTokenRequest'
+            examples:
+              accessKey:
+                summary: Exchange accessKeyId and secretAccessKey for tokens
+                value:
+                  accessKeyId: <accessKeyId>
+                  secretAccessKey: <secretAccessKey>
+              refreshToken:
+                summary: Exchange refreshToken for a new accessToken
+                value:
+                  refreshToken: <refreshToken>
+      responses:
+        '201':
+          description: Tokens issued
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/TokenResponse'
+                - $ref: '#/components/schemas/RefreshTokenResponse'
+              examples:
+                accessKey:
+                  summary: Exchange accessKeyId and secretAccessKey for tokens
+                  value:
+                    accessToken: <accessToken>
+                    refreshToken: <refreshToken>
+                    expiresIn: 18000
+                    refreshTokenExpiresIn: 432000
+                refreshToken:
+                  summary: Exchange refreshToken for a new accessToken
+                  value:
+                    accessToken: <accessToken>
+                    expiresIn: 18000
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+      tags:
+      - Token
+components:
+  schemas:
+    RefreshTokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        expiresIn:
+          type: integer
+      required:
+      - accessToken
+      - expiresIn
+      description: Returned when exchanging a refreshToken for a new accessToken.
+    RefreshTokenRequest:
+      type: object
+      description: Use this schema to exchange a refreshToken for a new accessToken.
+      required:
+      - refreshToken
+      properties:
+        refreshToken:
+          type: string
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+        refreshTokenExpiresIn:
+          type: integer
+      required:
+      - accessToken
+      - refreshToken
+      - expiresIn
+      - refreshTokenExpiresIn
+      description: Returned when exchanging accessKeyId and secretAccessKey for tokens.
+    TokenRequest:
+      type: object
+      description: Use this schema to exchange accessKeyId and secretAccessKey for tokens.
+      required:
+      - accessKeyId
+      - secretAccessKey
+      properties:
+        accessKeyId:
+          type: string
+        secretAccessKey:
+          type: string
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-mint.mcp.enabled: true

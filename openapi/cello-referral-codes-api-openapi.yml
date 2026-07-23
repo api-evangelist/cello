@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: Cello Events Referral Codes API
+  description: API for Cello referral platform
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+- url: https://api.cello.so
+- url: https://api.sandbox.cello.so
+security:
+- bearerAuth: []
+tags:
+- name: Referral Codes
+paths:
+  /referral-codes/{code}:
+    get:
+      description: Validate a referral code (UCC) and discover associated user/campaign.
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Unique campaign code to validate
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Referral code validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferralCodeValidation'
+              examples:
+                valid:
+                  value:
+                    code: UIPIWa2Hnnr
+                    productUserId: '12345678'
+                    valid: true
+                    campaignId: campaign_partners_1
+                invalid:
+                  value:
+                    code: BADCODE
+                    productUserId: ''
+                    valid: false
+                    campaignId: ''
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+      tags:
+      - Referral Codes
+  /referral-codes/active-link/{productUserId}:
+    get:
+      description: Retrieve an active UCC and invite link for a given user to support contextual sharing.
+      parameters:
+      - name: productUserId
+        in: path
+        required: true
+        description: Product-specific user identifier
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Active link returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveLinkResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+      tags:
+      - Referral Codes
+components:
+  schemas:
+    ReferralCodeValidation:
+      type: object
+      required:
+      - code
+      - valid
+      properties:
+        code:
+          type: string
+        productUserId:
+          type: string
+        valid:
+          type: boolean
+        campaignId:
+          type: string
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    ActiveLinkResponse:
+      type: object
+      required:
+      - activeUcc
+      - link
+      properties:
+        activeUcc:
+          type: string
+          description: Active referral code
+        link:
+          type: string
+          description: Full invite link
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-mint.mcp.enabled: true

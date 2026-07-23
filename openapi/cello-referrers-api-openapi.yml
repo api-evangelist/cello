@@ -1,0 +1,58 @@
+openapi: 3.1.0
+info:
+  title: Cello Events Referrers API
+  description: API for Cello referral platform
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+- url: https://api.cello.so
+- url: https://api.sandbox.cello.so
+security:
+- bearerAuth: []
+tags:
+- name: Referrers
+paths:
+  /referrers/{productUserId}/depersonalize:
+    post:
+      description: Depersonalize a referrer record identified by productUserId.
+      parameters:
+      - name: productUserId
+        in: path
+        required: true
+        description: The product user identifier of the referrer to depersonalize
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Referrer depersonalized successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Referrer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
+      tags:
+      - Referrers
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-mint.mcp.enabled: true
