@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cello-openapi-original.json
+format: simple
+envelope:
+  schema: Error
+  fields:
+    message: Human-readable error message (required)
+note: >-
+  Cello returns a simple {message} error envelope rather than RFC 9457
+  application/problem+json. Problems below are derived from the OpenAPI 4xx
+  responses declared per operation.
+problems:
+  - status: 400
+    title: Bad request
+    source_operation: "POST /token"
+    meaning: Malformed token request (missing/invalid accessKeyId, secretAccessKey, or refreshToken).
+  - status: 400
+    title: Bad request
+    source_operation: "POST /events"
+    meaning: Invalid or malformed event payload (eventName, payload, or context).
+  - status: 401
+    title: Unauthorized
+    source_operation: "GET /referral-codes/{code}"
+    meaning: Missing or invalid bearer accessToken.
+  - status: 401
+    title: Unauthorized
+    source_operation: "GET /new-users/{productUserId}/reward"
+    meaning: Missing or invalid bearer accessToken.
+  - status: 401
+    title: Unauthorized
+    source_operation: "GET /referral-codes/active-link/{productUserId}"
+    meaning: Missing or invalid bearer accessToken.
+  - status: 401
+    title: Unauthorized
+    source_operation: "POST /referrers/{productUserId}/depersonalize"
+    meaning: Missing or invalid bearer accessToken.
+  - status: 404
+    title: Not found
+    source_operation: "POST /referrers/{productUserId}/depersonalize"
+    meaning: No referrer found for the given productUserId.

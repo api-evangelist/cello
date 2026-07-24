@@ -1,0 +1,35 @@
+generated: '2026-07-18'
+method: searched
+status: published
+source: https://docs.cello.so/mcp/introduction
+server:
+  name: cello
+  transport: http
+  url: https://mcp.cello.so/mcp
+  sandbox_url: https://mcp.sandbox.cello.so/mcp
+  auth: oauth
+docs: https://docs.cello.so/mcp/connect
+clients:
+  - Claude
+  - Claude Code
+  - Cursor
+  - VS Code
+  - Windsurf
+  - Lovable
+tools:
+  - name: cello_get_program_metrics
+    description: Program metrics, trends, and benchmarks in one call.
+  - name: cello_get_referrers
+    description: Locate and rank referrers by engagement or performance metrics.
+  - name: cello_get_top_referrers
+    description: Top referrers by net new ARR, in descending order.
+  - name: cello_get_integration_status
+    description: Health of the four integration components.
+  - name: cello_get_events
+    description: Latest events feed with per-field validation.
+  - name: cello_get_recommendations
+    description: Prioritized best-practice recommendations for program improvement.
+  - name: search_cello
+    description: Search the Cello knowledge base for documentation and guides.
+  - name: query_docs_filesystem_cello
+    description: Read full doc pages and OpenAPI specs via filesystem query.

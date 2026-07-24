@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: searched
+source:
+  - openapi/cello-openapi-original.json
+  - https://docs.cello.so/api-reference/introduction
+authentication:
+  style: bearer
+  detail: >-
+    Exchange accessKeyId + secretAccessKey at POST /token for a short-lived
+    accessToken (plus a refreshToken); send the accessToken in the Authorization
+    header. Token lifetimes are returned as expiresIn / refreshTokenExpiresIn.
+  ref: authentication/cello-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header or parameter is documented in the OpenAPI or docs.
+pagination:
+  supported: false
+  note: No paginated collection endpoints in the current API surface.
+versioning:
+  style: dated-changelog
+  ref: lifecycle/cello-lifecycle.yml
+error_envelope:
+  shape: '{ message }'
+  problem_details: false
+  ref: errors/cello-problem-types.yml
+rate_limiting:
+  signaled: false
+  note: No rate-limit headers or policy documented.
+request_tracing:
+  request_id_header: null
+metadata:
+  supported: false
+events:
+  model: inbound
+  note: >-
+    Cello receives conversion events at POST /events and via payment-gateway
+    webhooks (Stripe, Chargebee) that you configure to forward to Cello. Cello
+    does not publish an outbound webhook/event catalog for consumers.

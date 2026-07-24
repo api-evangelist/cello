@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cello API
+  version: 1.0.0
+extends: openapi/cello-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: cello
+      x-apievangelist-category: referral-marketing
+      x-apievangelist-rating: 3
+  - target: $.paths['/token'].post
+    update:
+      x-apievangelist-operation-id: getToken
+      summary: Get access and refresh tokens
+  - target: $.paths['/events'].post
+    update:
+      x-apievangelist-operation-id: sendEvent
+      summary: Report a referral-related event (signup, purchase, refund)
+  - target: $.paths['/referral-codes/{code}'].get
+    update:
+      x-apievangelist-operation-id: getReferralCodeInfo
+      summary: Validate a referral code (UCC) and discover its user/campaign
+  - target: $.paths['/referral-codes/active-link/{productUserId}'].get
+    update:
+      x-apievangelist-operation-id: fetchActiveLink
+      summary: Retrieve an active UCC and invite link for a user
+  - target: $.paths['/new-users/{productUserId}/reward'].get
+    update:
+      x-apievangelist-operation-id: getNewUserReward
+      summary: Retrieve new-user reward eligibility and referral info
+  - target: $.paths['/referrers/{productUserId}/depersonalize'].post
+    update:
+      x-apievangelist-operation-id: depersonalizeReferrer
+      summary: Depersonalize a referrer (GDPR/CCPA data-subject request)

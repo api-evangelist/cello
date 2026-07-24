@@ -1,0 +1,27 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.cello.so/api-reference/introduction
+note: >-
+  Cello ships a fully separate sandbox environment across API, MCP, and asset
+  hosts. Credentials (accessKeyId / secretAccessKey) are issued per environment
+  from the Access Keys section of the dashboard; no published magic test values.
+environments:
+  - name: sandbox
+    api_base_url: https://api.sandbox.cello.so
+    mcp_url: https://mcp.sandbox.cello.so/mcp
+    assets_url: https://assets.sandbox.cello.so/attribution/latest/cello-attribution.js
+  - name: production
+    api_base_url: https://api.cello.so
+    mcp_url: https://mcp.cello.so/mcp
+    assets_url: https://assets.cello.so/attribution/latest/cello-attribution.js
+credentials:
+  model: per-environment access keys
+  fields: [accessKeyId, secretAccessKey]
+  issued_from: Access Keys section of the Cello dashboard
+  note: >-
+    Exchange accessKeyId + secretAccessKey at POST /token for a bearer accessToken.
+    Sandbox and production keys are distinct. No public test cards or magic
+    identifiers are published (Cello is a referral platform, not a card acquirer).
+tooling:
+  - Event Feed (portal) - inspect incoming signup/purchase event payloads with per-field validation
+  - Integration Status (portal) - change signup/purchase sources directly in sandbox

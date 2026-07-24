@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.cello.so/changelog
+scheme: dated-updates
+entries:
+  - date: '2026-07-03'
+    title: Real-time analytics
+    breaking: false
+    highlights:
+      - Portal analytics now available in near real time after a data-infrastructure upgrade.
+      - Purchase conversions and rewards still processed separately (can take 24h+).
+  - date: '2026-06-29'
+    title: MCP Growth Tools and Expanded Client Support
+    breaking: false
+    highlights:
+      - Added growth-manager MCP tools (program metrics, benchmarks, top referrers, recommendations) alongside developer tools.
+      - Expanded MCP client support - Claude, Claude Code, Cursor, VS Code, Windsurf, Lovable, and more.
+  - date: '2026-05-06'
+    title: Integration Status
+    breaking: false
+    highlights:
+      - New Integration Status page showing real-time health of the four core components (Referral component, Attribution library, Signups, Purchases).
+      - Jump into the Event Feed for per-event detail; change signup/purchase sources directly in sandbox.

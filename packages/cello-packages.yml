@@ -1,0 +1,40 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/getcello
+note: >-
+  First-party Cello client libraries. Cello's web SDKs (Attribution JS, Referral
+  Component / cello-js) load from the assets.cello.so CDN rather than a package
+  registry; the mobile SDKs are published as source in the getcello GitHub org.
+  No npm/PyPI/Maven registry package was found under a Cello namespace at probe time.
+packages:
+  - language: swift
+    registry: swift-package-manager
+    name: cello-ios-sp
+    url: https://github.com/getcello/cello-ios-sp
+    install: "Add https://github.com/getcello/cello-ios-sp as a Swift Package dependency"
+    official: true
+  - language: objective-c
+    registry: github
+    name: cello-ios
+    url: https://github.com/getcello/cello-ios
+    install: "See repo README"
+    official: true
+  - language: kotlin
+    registry: github
+    name: cello-android
+    url: https://github.com/getcello/cello-android
+    install: "See repo README"
+    official: true
+  - language: typescript
+    registry: github
+    name: cello-react-native
+    url: https://github.com/getcello/cello-react-native
+    install: "React Native wrapper bridging the iOS and Android SDKs; see repo README"
+    official: true
+  - language: javascript
+    registry: cdn
+    name: cello-attribution.js
+    url: https://assets.cello.so/attribution/latest/cello-attribution.js
+    install: '<script type="module" async src="https://assets.cello.so/attribution/latest/cello-attribution.js"></script>'
+    sandbox_url: https://assets.sandbox.cello.so/attribution/latest/cello-attribution.js
+    official: true

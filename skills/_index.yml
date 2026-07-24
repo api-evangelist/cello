@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/cello-openapi-original.json
+skills:
+  - file: cello-track-referral-conversion.md
+    name: Track a referral conversion with Cello
+    api: openapi/cello-openapi-original.json
+    operations: ["POST /token", "GET /referral-codes/{code}", "POST /events"]
+  - file: cello-fetch-and-reward-referee.md
+    name: Fetch a share link and check referee reward eligibility
+    api: openapi/cello-openapi-original.json
+    operations: ["POST /token", "GET /referral-codes/active-link/{productUserId}", "GET /new-users/{productUserId}/reward"]

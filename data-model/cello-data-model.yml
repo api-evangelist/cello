@@ -1,0 +1,63 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cello-openapi-original.json
+note: >-
+  Entity graph derived from OpenAPI component schemas and id-reference fields.
+  Core domain: referral codes (UCCs) map product users to campaigns; events report
+  conversions; rewards describe referee incentives.
+entities:
+  - name: ReferralCode
+    id_field: code
+    aka: UCC (unique customer code)
+    fields: [code, productUserId, valid, campaignId]
+  - name: ActiveLink
+    fields: [activeUcc, link]
+  - name: Referrer
+    id_field: productUserId
+  - name: Event
+    fields: [eventName, payload, context]
+    detail: eventName enum includes ReferralUpdated
+  - name: EventPayload
+    fields: [ucc, newUserId, price, currency]
+  - name: RewardEligibility
+    fields: [eligible, reward, signupId, signupAt, referralUcc, campaignId, campaignRevision]
+  - name: Reward
+    fields: [type, interval, intervalCount, percentage]
+  - name: Campaign
+    id_field: campaignId
+    note: referenced by campaignId across ReferralCode and RewardEligibility (not a standalone API resource)
+  - name: Token
+    fields: [accessToken, refreshToken, expiresIn, refreshTokenExpiresIn]
+relationships:
+  - from: ReferralCode
+    to: Referrer
+    type: belongs_to
+    via: productUserId
+  - from: ReferralCode
+    to: Campaign
+    type: belongs_to
+    via: campaignId
+  - from: ActiveLink
+    to: ReferralCode
+    type: has_one
+    via: activeUcc
+  - from: Event
+    to: EventPayload
+    type: has_one
+    via: payload
+  - from: EventPayload
+    to: ReferralCode
+    type: belongs_to
+    via: ucc
+  - from: RewardEligibility
+    to: Reward
+    type: has_one
+    via: reward
+  - from: RewardEligibility
+    to: Campaign
+    type: belongs_to
+    via: campaignId
+  - from: RewardEligibility
+    to: ReferralCode
+    type: belongs_to
+    via: referralUcc

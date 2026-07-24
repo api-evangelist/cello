@@ -1,0 +1,21 @@
+generated: '2026-07-18'
+method: searched
+source:
+  - openapi/cello-openapi-original.json
+  - https://docs.cello.so/changelog
+versioning:
+  scheme: spec-version
+  current: '1.0.0'
+  note: >-
+    OpenAPI declares version 1.0.0; base URLs are unversioned
+    (https://api.cello.so). Cello publishes a dated changelog rather than a
+    numbered API-version policy.
+changelog: https://docs.cello.so/changelog
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No published deprecation/sunset policy found.
+sla:
+  url: null
+status_page: null
+deprecated_operations: []

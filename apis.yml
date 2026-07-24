@@ -1,9 +1,29 @@
 aid: cello
 name: Cello
-description: 'Cello is a company surfaced as a portfolio company of hv-capital and added to the API Evangelist
-  network as a stub for enrichment. Sector: ai-enterprise-software. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Cello is an all-in-one, AI-powered referral platform for SaaS companies. It lets
+  product teams embed in-product user referrals and run partner/affiliate programs
+  with a few lines of code, then automates attribution, campaigns, notifications,
+  fraud detection, and cross-border payouts. Cello ships an embeddable Referral
+  Component and Attribution JS SDK for web plus native iOS, Android, Flutter, and
+  React Native SDKs, a REST API for tokens, referral-code validation, events, and
+  new-user rewards, a Growth Portal for analytics, and an official hosted MCP server
+  exposing developer and growth-manager tools. Customers include Typeform, Miro,
+  Descript, Pleo, and SmallPDF. Backed by HV Capital.
 url: https://raw.githubusercontent.com/api-evangelist/cello/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cello.so/wp-content/uploads/2022/12/Group-174900-1.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -12,13 +32,133 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
+- Referral Marketing
+- Affiliate Marketing
+- Growth
+- SaaS
+- Attribution
+- Partner Programs
 - Ai Enterprise Software
-apis: []
+apis:
+- aid: cello:cello-events-api
+  name: Cello Events API
+  description: The Events API from Cello — 1 operation(s) for events.
+  humanURL: https://docs.cello.so/api-reference/introduction
+  baseURL: https://api.cello.so
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/cello-events-api-openapi.yml
+- aid: cello:cello-new-users-api
+  name: Cello New Users API
+  description: The New Users API from Cello — 1 operation(s) for new users.
+  humanURL: https://docs.cello.so/api-reference/introduction
+  baseURL: https://api.cello.so
+  tags:
+  - New Users
+  properties:
+  - type: OpenAPI
+    url: openapi/cello-new-users-api-openapi.yml
+- aid: cello:cello-referral-codes-api
+  name: Cello Referral Codes API
+  description: The Referral Codes API from Cello — 2 operation(s) for referral codes.
+  humanURL: https://docs.cello.so/api-reference/introduction
+  baseURL: https://api.cello.so
+  tags:
+  - Referral Codes
+  properties:
+  - type: OpenAPI
+    url: openapi/cello-referral-codes-api-openapi.yml
+- aid: cello:cello-referrers-api
+  name: Cello Referrers API
+  description: The Referrers API from Cello — 1 operation(s) for referrers.
+  humanURL: https://docs.cello.so/api-reference/introduction
+  baseURL: https://api.cello.so
+  tags:
+  - Referrers
+  properties:
+  - type: OpenAPI
+    url: openapi/cello-referrers-api-openapi.yml
+- aid: cello:cello-token-api
+  name: Cello Token API
+  description: The Token API from Cello — 1 operation(s) for token.
+  humanURL: https://docs.cello.so/api-reference/introduction
+  baseURL: https://api.cello.so
+  tags:
+  - Token
+  properties:
+  - type: OpenAPI
+    url: openapi/cello-token-api-openapi.yml
+common:
+- type: DomainSecurity
+  url: security/cello-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/cello-agentic-access.yml
+- type: Authentication
+  url: authentication/cello-authentication.yml
+- type: DeveloperPortal
+  url: https://docs.cello.so
+- type: Documentation
+  url: https://docs.cello.so
+- type: APIReference
+  url: https://docs.cello.so/api-reference/introduction
+- type: GettingStarted
+  url: https://docs.cello.so/integration-overview
+- type: Support
+  url: https://docs.cello.so/guides/support/faqs
+- type: Blog
+  url: https://cello.so/resources/
+- type: GitHubOrganization
+  url: https://github.com/getcello
+- type: Pricing
+  url: https://cello.so/pricing/
+- type: Login
+  url: https://portal.cello.so
+- type: TermsOfService
+  url: https://cello.so/terms-of-service/
+- type: PrivacyPolicy
+  url: https://cello.so/privacy-policy/
+- type: MCPServer
+  url: mcp/cello-mcp.yml
+- type: LLMsTxt
+  url: llms/cello-llms.txt
+- type: Packages
+  url: packages/cello-packages.yml
+- type: SDKs
+  url: packages/cello-packages.yml
+- type: Components
+  url: components/cello-components.yml
+- type: Sandbox
+  url: sandbox/cello-sandbox.yml
+- type: ChangeLog
+  url: changelog/cello-changelog.yml
+- type: Lifecycle
+  url: lifecycle/cello-lifecycle.yml
+- type: Conventions
+  url: conventions/cello-conventions.yml
+- type: ErrorCatalog
+  url: errors/cello-problem-types.yml
+- type: DataModel
+  url: data-model/cello-data-model.yml
+- type: Conformance
+  url: conformance/cello-conformance.yml
+- type: Compliance
+  url: https://cello.so/privacy-policy/
+- type: AgentSkill
+  url: skills/cello-track-referral-conversion.md
+- type: AgentSkill
+  url: skills/cello-fetch-and-reward-referee.md
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

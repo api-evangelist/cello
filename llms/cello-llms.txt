@@ -1,0 +1,93 @@
+# Cello
+
+## Docs
+
+- [Get token](https://docs.cello.so/api-reference/authentication/get-token.md): Obtain accessToken & refreshToken using your accessKeyId and secretAccessKey, or obtain a new accessToken using a refreshToken.
+- [Send new event](https://docs.cello.so/api-reference/generic-events/send-event.md): Report referral-related events such as signups, purchases, and refunds.
+- [Introduction](https://docs.cello.so/api-reference/introduction.md): Overview of Cello API for referral codes, authentication, and quickstart.
+- [Get new user reward info](https://docs.cello.so/api-reference/new-users/get-reward.md): Retrieve details on eligibility for the new user reward (discount) and referral information.
+- [Fetch active link](https://docs.cello.so/api-reference/referral-codes/fetch-active-link.md): Retrieve an active UCC and invite link for a given user to support contextual sharing.
+- [Fetch referral code info](https://docs.cello.so/api-reference/referral-codes/fetch-referral-code-info.md): Validate a referral code (UCC) and discover associated user/campaign.
+- [Apply Discounts](https://docs.cello.so/attribution/apply-discounts.md): Learn how to apply discounts to referred users when the purchase a subscription
+- [Mobile Signup Flow](https://docs.cello.so/attribution/for-mobile.md): Learn how to set up mobile app referral attribution
+- [Web Signup Flow](https://docs.cello.so/attribution/for-web.md): Learn how to capture referral codes on your website
+- [HubSpot Forms](https://docs.cello.so/attribution/hubspot.md): Integrate the Cello attribution library with HubSpot forms to track referral conversions
+- [Introduction](https://docs.cello.so/attribution/introduction.md): Learn how to implement referral attribution to track signups and purchases back to their original referrers
+- [Track Purchases](https://docs.cello.so/attribution/tracking-purchase.md): Learn how to track purchase events with Cello
+- [Track Signups](https://docs.cello.so/attribution/tracking-signups.md): Learn how to track signup events with Cello
+- [Typeform Forms](https://docs.cello.so/attribution/typeform.md): Ingest Cello's referral code (ucc) into HubSpot using Typeform forms
+- [Chargebee Webhook Quickstart](https://docs.cello.so/attribution/use-cases/chargebee.md): Learn how to integrate Cello if you are using Chargebee JS to create Chargebee customer and Chargebee Webhook to send Cello conversion events.
+- [HubSpot + Zapier Quickstart](https://docs.cello.so/attribution/use-cases/hubspot-zapier.md): Learn how to send Cello signup events from HubSpot deal stage changes using a no-code Zapier workflow.
+- [Stripe Webhook Quickstart](https://docs.cello.so/attribution/use-cases/stripe.md): Learn how to integrate Cello if you are using Stripe JS to create Stripe customer and Stripe Webhook to send Cello conversion events.
+- [Cello + Claude integration](https://docs.cello.so/coding-apps/claude-integration.md): How to add user referrals to your app using Cello with Claude
+- [Cello + Cursor integration](https://docs.cello.so/coding-apps/cursor-integration.md): How to add user referrals to your app using Cello with Cursor
+- [Cello + Lovable integration](https://docs.cello.so/coding-apps/lovable-integration.md): How to add user referrals to your app using Cello with Lovable
+- [Cello + Replit integration](https://docs.cello.so/coding-apps/replit-integration.md): How to add user referrals to your app using Cello with Replit
+- [AI Assistant](https://docs.cello.so/guides/ai-assistant/overview.md): Get answers about your referral program performance and take action faster - directly in the Cello portal
+- [AI Prompt Library](https://docs.cello.so/guides/ai-assistant/prompt-library.md): Example questions to ask the Cello AI Assistant
+- [Performance Benchmarks](https://docs.cello.so/guides/attribution/benchmarks.md): Understand how your program performance compares to similar companies
+- [Manual Attribution](https://docs.cello.so/guides/attribution/manual-attribution.md): At Cello, we understand that there may be instances where automated referral attribution doesn't work as expected
+- [Program Performance and ARR](https://docs.cello.so/guides/attribution/program-performance.md): Understand how Cello calculates Annual Recurring Revenue to measure your referral program's performance
+- [Performance Recommendations](https://docs.cello.so/guides/attribution/recommendations.md): Prioritized actions to improve your referral program performance
+- [Increase Discoverability Of Your Referral Program](https://docs.cello.so/guides/best-practices/Increase-discoverability-of-your-referral-program.md): Learn how to drive organic activation of your referral program with high discoverability
+- [Contextual Sharing](https://docs.cello.so/guides/best-practices/contextual-sharing.md): Guide for increasing referral sharing at key moments
+- [Optimize signup conversion](https://docs.cello.so/guides/best-practices/optimizing-signup-conversion.md): Recommendations to optimize the signup conversion of referred users
+- [Setting Up Campaigns](https://docs.cello.so/guides/campaigns/setting-up-campaigns.md): Cello makes it easy to automatically notify and reward your users for making successful referrals
+- [Cello vs. FirstPromoter](https://docs.cello.so/guides/competitor-comparison/cello-vs-firstpromoter.md): Compare Cello and FirstPromoter for referral programs: integration effort, server vs client tracking, in‑app UI, notifications, campaign rules, payouts, and trade‑offs.
+- [Cello vs. Impact Advocate (SaaSquatch)](https://docs.cello.so/guides/competitor-comparison/cello-vs-impact-advocate.md): Compare Cello and Impact Advocate (SaaSquatch): integration effort, widgets vs embedded UI, server vs client attribution, notifications, campaign rules, and payouts.
+- [Cello vs. PartnerStack](https://docs.cello.so/guides/competitor-comparison/cello-vs-partnerstack.md): Compare Cello and PartnerStack for referrals: embedded UI vs external portal, server vs client tracking, notifications, campaign rules, payouts, and trade‑offs.
+- [Cello vs. Rewardful](https://docs.cello.so/guides/competitor-comparison/cello-vs-rewardful.md): Evaluate and prototype Cello vs Rewardful: what to build, risks, and trade‑offs across attribution, UI, notifications, rewards, and payouts.
+- [Fraud Detection](https://docs.cello.so/guides/fraud-detection.md): Cello provides automated capabilities to detect and automatically mitigate potential cases of self-referrals and fraudulent activity
+- [Introduction](https://docs.cello.so/guides/introduction.md): Your complete playbook for building and optimizing successful referral programs with Cello
+- [Manage Partners](https://docs.cello.so/guides/partners/manage-partners.md): Cello allows you to manage your partners and affiliates to provide them with a full portal experience
+- [Overview](https://docs.cello.so/guides/partners/partner-overview.md): Cello allows you to set up and manage all aspects of your own partner program, unifying user referrals and partners in one platform
+- [Partner Portal](https://docs.cello.so/guides/partners/partner-portal.md): The partner portal provides full portal experience for accessing their affiliate link, tracking progress on referrals, and getting rewarded for successful referrals
+- [Partner Resources](https://docs.cello.so/guides/partners/partner-resources.md): This guide is designed to help Partner Managers effectively use the Partner Resources feature to add, manage, and share guides and resources with partners
+- [Support FAQ](https://docs.cello.so/guides/support/faqs.md): Frequently asked questions about integrating, running, and troubleshooting Cello
+- [Event Feed](https://docs.cello.so/guides/support/portal/event-feed.md): Monitor and debug incoming signup and transaction events from Stripe, Chargebee, Cello API, and auto attribution. Inspect event payloads, understand field validation statuses (OK, Warning, Error), and troubleshoot missing or malformed fields.
+- [Integration Status](https://docs.cello.so/guides/support/portal/integration-status.md): Get a real-time health overview of your Cello integration across the Referral Component, Attribution Library, Signups, and Purchases. See whether each piece is connected, when the last event was received, and what to do when something goes wrong. The signup and purchase source must be confirmed with…
+- [Configuring Referral Component](https://docs.cello.so/guides/user-experience/configuring-referral-component.md): The Referral Component is an all-in-one referral experience, easily added to your web application
+- [New User Discounts](https://docs.cello.so/guides/user-experience/new-user-discounts.md): Offering discounts or rewards to referees is a powerful strategy for improving signup conversion
+- [Optimizing Referral Landing Page](https://docs.cello.so/guides/user-experience/optimizing-landing-pages.md): This guide focuses on optimizing landing pages for referrals, a critical step in the user journey
+- [Overview](https://docs.cello.so/guides/user-experience/overview.md): The Referral Component is an all-in-one referral experience, easily added to your web application with just a few lines of code
+- [Personalizing Referrals](https://docs.cello.so/guides/user-experience/personalizing-referrals.md): Add personalized messages to your landing pages to increase conversion rates
+- [Referral Notifications and Emails](https://docs.cello.so/guides/user-experience/referral-notifications-and-emails.md): Cello provides notifications that are seamlessly integrated with your product experience to inform, activate and continuously engage users with the referral program
+- [Setup Overview](https://docs.cello.so/integration-overview.md): Get started with Cello in 4 easy steps
+- [Introduction](https://docs.cello.so/integrations/introduction.md): Connect Cello to your payment gateway, CRM, and other systems
+- [Salesforce Apex Triggers + Cello API](https://docs.cello.so/integrations/salesforce-apex-triggers.md): This documentation guides you through the process of setting up Apex triggers in Salesforce to handle specific conditions related to Opportunities
+- [Cello + Supabase integration](https://docs.cello.so/integrations/supabase.md): How to add user referrals to your app built on Supabase
+- [Chargebee Webhook](https://docs.cello.so/integrations/webhooks/chargebee-webhook.md): Send signup and purchase events to Cello using Chargebee Webhook
+- [Stripe Webhook](https://docs.cello.so/integrations/webhooks/stripe-webhook.md): Send signup and purchase events to Cello using Stripe Webhook
+- [Introduction](https://docs.cello.so/introduction.md): Learn how to turn your users into your most valuable growth channel
+- [Key Concepts](https://docs.cello.so/key-concepts.md): Essential terms and concepts for understanding Cello's referral platform and attribution system
+- [Manage cookie consent](https://docs.cello.so/landing-pages/manage-cookies.md): To ensure compliance with privacy regulations, customers handle cookies and respond to user consent preferences with care and transparency. It is your responsibility to prompt website visitors to specify their preferred tracking level.
+- [Introduction](https://docs.cello.so/llm-quickstart.md): Let your AI code assistant learn from Cello documentation and automate your integration steps
+- [Connect your client](https://docs.cello.so/mcp/connect.md): Set up the Cello MCP server in Claude, Claude Code, Cursor, VS Code, Windsurf, Lovable, and other MCP clients
+- [Prompts](https://docs.cello.so/mcp/developers/prompts.md): Example prompts for building and debugging your Cello integration
+- [Tools](https://docs.cello.so/mcp/developers/tools.md): The Cello MCP tools available to developers
+- [Use cases](https://docs.cello.so/mcp/developers/use-cases.md): How to use the Cello MCP to set up, verify, and debug your Cello integration from any AI coding tool.
+- [Prompts](https://docs.cello.so/mcp/growth/prompts.md): Example prompts for understanding and improving your referral program
+- [Tools](https://docs.cello.so/mcp/growth/tools.md): The Cello MCP tools available to growth managers
+- [Use cases](https://docs.cello.so/mcp/growth/use-cases.md): How to use the Cello MCP to track performance, benchmark against peers, and get program recommendations from your AI client.
+- [Cello MCP](https://docs.cello.so/mcp/introduction.md): Connect Cello to your AI tools through the Model Context Protocol (MCP)
+- [All tools](https://docs.cello.so/mcp/tools.md): The complete list of tools the Cello MCP server exposes
+- [Custom Launcher](https://docs.cello.so/referral-component/custom-launcher.md): Learn how to implement your own button to open Referral Component and display notifications.
+- [Introduction](https://docs.cello.so/referral-component/introduction.md): Add a referral program to your application with Cello's embeddable referral component
+- [Quickstart](https://docs.cello.so/referral-component/quickstart.md): Learn how to install Cello Referral Component into your web application
+- [Introduction](https://docs.cello.so/sdk/client-side/attribution-js-introduction.md): JavaScript library for capturing and tracking referral codes throughout the conversion funnel
+- [Usage](https://docs.cello.so/sdk/client-side/attribution-js-usage.md): Below is the full list of commands to call the Cello Attribution JS SDK with.
+- [Introduction](https://docs.cello.so/sdk/client-side/cello-js-introduction.md): JavaScript SDK for embedding the Cello Referral Component in web applications
+- [Usage](https://docs.cello.so/sdk/client-side/cello-js-usage.md): Below is the full list of commands to call the Cello JS SDK with.
+- [Embedded Script Tag](https://docs.cello.so/sdk/client-side/embedded-script-tag.md): Learn how to add Cello attribution script to your website
+- [Google Tag Manager](https://docs.cello.so/sdk/client-side/google-tag-manager.md): How to add the Cello attribution script to your site using Google Tag Manager
+- [User Authentication](https://docs.cello.so/sdk/client-side/user-authentication.md)
+- [Introduction](https://docs.cello.so/sdk/introduction.md): Explore our SDKs for adding referrals to your web and mobile apps.
+- [Cello for Android](https://docs.cello.so/sdk/mobile/android.md)
+- [Cello for Flutter](https://docs.cello.so/sdk/mobile/flutter.md)
+- [Introduction](https://docs.cello.so/sdk/mobile/introduction.md): Native mobile SDKs for embedding referral functionality in iOS and Android applications
+- [Cello for iOS](https://docs.cello.so/sdk/mobile/ios.md)
+- [Cello for React Native](https://docs.cello.so/sdk/mobile/react-native.md)
+
+## OpenAPI Specs
+
+- [openapi](https://docs.cello.so/api-reference/openapi.json)

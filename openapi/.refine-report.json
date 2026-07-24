@@ -1,0 +1,22 @@
+{
+  "provider": "cello",
+  "sources": [
+    "cello-events-api-openapi.yml",
+    "cello-new-users-api-openapi.yml",
+    "cello-referral-codes-api-openapi.yml",
+    "cello-referrers-api-openapi.yml",
+    "cello-token-api-openapi.yml"
+  ],
+  "outputs": [
+    "cello-events-api-openapi.yml",
+    "cello-new-users-api-openapi.yml",
+    "cello-referral-codes-api-openapi.yml",
+    "cello-referrers-api-openapi.yml",
+    "cello-token-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

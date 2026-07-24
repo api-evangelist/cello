@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.cello.so/sdk/introduction
+note: >-
+  Client-side / embeddable UI surfaces distinct from the server-side REST API.
+  Cello's core product is an embeddable in-product referral experience.
+families:
+  - family: Referral Component
+    description: >-
+      All-in-one embeddable referral experience added to a web application with a
+      few lines of code (the Cello JS SDK); supports a custom launcher button.
+    docs: https://docs.cello.so/referral-component/introduction
+    kind: web-component
+    loaders:
+      - https://assets.cello.so/attribution/latest/cello-attribution.js
+  - family: Attribution Library
+    description: >-
+      Client-side JavaScript library (Attribution JS) for capturing and tracking
+      referral codes through the conversion funnel; installable via embedded script
+      tag or Google Tag Manager.
+    docs: https://docs.cello.so/sdk/client-side/attribution-js-introduction
+    kind: js-library
+    loaders:
+      - https://assets.cello.so/attribution/latest/cello-attribution.js
+      - https://assets.sandbox.cello.so/attribution/latest/cello-attribution.js
+  - family: Mobile Referral Component
+    description: >-
+      Native mobile embeds of the referral component for iOS, Android, Flutter, and
+      React Native.
+    docs: https://docs.cello.so/sdk/mobile/introduction
+    kind: mobile-sdk

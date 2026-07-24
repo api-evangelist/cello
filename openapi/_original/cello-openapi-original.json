@@ -1,0 +1,814 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Cello API",
+    "description": "API for Cello referral platform",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "1.0.0"
+  },
+  "x-mint.mcp.enabled": true,
+  "servers": [
+    {
+      "url": "https://api.cello.so"
+    },
+    {
+      "url": "https://api.sandbox.cello.so"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/token": {
+      "post": {
+        "description": "Obtain accessToken & refreshToken using your accessKeyId and secretAccessKey, or obtain a new accessToken using a refreshToken.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TokenRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RefreshTokenRequest"
+                  }
+                ]
+              },
+              "examples": {
+                "accessKey": {
+                  "summary": "Exchange accessKeyId and secretAccessKey for tokens",
+                  "value": {
+                    "accessKeyId": "<accessKeyId>",
+                    "secretAccessKey": "<secretAccessKey>"
+                  }
+                },
+                "refreshToken": {
+                  "summary": "Exchange refreshToken for a new accessToken",
+                  "value": {
+                    "refreshToken": "<refreshToken>"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tokens issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/TokenResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RefreshTokenResponse"
+                    }
+                  ]
+                },
+                "examples": {
+                  "accessKey": {
+                    "summary": "Exchange accessKeyId and secretAccessKey for tokens",
+                    "value": {
+                      "accessToken": "<accessToken>",
+                      "refreshToken": "<refreshToken>",
+                      "expiresIn": 18000,
+                      "refreshTokenExpiresIn": 432000
+                    }
+                  },
+                  "refreshToken": {
+                    "summary": "Exchange refreshToken for a new accessToken",
+                    "value": {
+                      "accessToken": "<accessToken>",
+                      "expiresIn": 18000
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/referral-codes/{code}": {
+      "get": {
+        "description": "Validate a referral code (UCC) and discover associated user/campaign.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "description": "Unique campaign code to validate",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Referral code validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralCodeValidation"
+                },
+                "examples": {
+                  "valid": {
+                    "value": {
+                      "code": "UIPIWa2Hnnr",
+                      "productUserId": "12345678",
+                      "valid": true,
+                      "campaignId": "campaign_partners_1"
+                    }
+                  },
+                  "invalid": {
+                    "value": {
+                      "code": "BADCODE",
+                      "productUserId": "",
+                      "valid": false,
+                      "campaignId": ""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/new-users/{productUserId}/reward": {
+      "get": {
+        "description": "Retrieve details on eligibility for the new user reward (discount) and referral information.",
+        "parameters": [
+          {
+            "name": "productUserId",
+            "in": "path",
+            "required": true,
+            "description": "The Id of the user you want to check",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New user reward and eligibility information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardEligibilityResponse"
+                },
+                "examples": {
+                  "eligible": {
+                    "summary": "New user is eligible for a reward",
+                    "value": {
+                      "eligible": true,
+                      "reward": {
+                        "type": "standard",
+                        "interval": "month",
+                        "intervalCount": 3,
+                        "percentage": 20
+                      },
+                      "signupId": "signup_abc123",
+                      "signupAt": "2024-01-15T10:30:00Z",
+                      "referralUcc": "ucc_xyz789",
+                      "campaignId": "campaign_id_123",
+                      "campaignRevision": "v2"
+                    }
+                  },
+                  "not-eligible": {
+                    "summary": "New user is not eligible for a reward",
+                    "value": {
+                      "eligible": false,
+                      "reward": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/referral-codes/active-link/{productUserId}": {
+      "get": {
+        "description": "Retrieve an active UCC and invite link for a given user to support contextual sharing.",
+        "parameters": [
+          {
+            "name": "productUserId",
+            "in": "path",
+            "required": true,
+            "description": "Product-specific user identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Active link returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActiveLinkResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/referrers/{productUserId}/depersonalize": {
+      "post": {
+        "description": "Depersonalize a referrer record identified by productUserId.",
+        "parameters": [
+          {
+            "name": "productUserId",
+            "in": "path",
+            "required": true,
+            "description": "The product user identifier of the referrer to depersonalize",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Referrer depersonalized successfully"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Referrer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/events": {
+      "post": {
+        "description": "Report referral-related events such as signups, purchases, and refunds.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventEnvelope"
+              },
+              "examples": {
+                "new-signup": {
+                  "value": {
+                    "eventName": "ReferralUpdated",
+                    "payload": {
+                      "ucc": "cello-ucc",
+                      "newUserId": "new-user-product-id",
+                      "price": 0,
+                      "currency": ""
+                    },
+                    "context": {
+                      "newUser": {
+                        "id": "new-user-id",
+                        "email": "new_user@gmail.com",
+                        "name": "New user name",
+                        "organizationId": "org-123"
+                      },
+                      "event": {
+                        "trigger": "new-signup",
+                        "timestamp": "2022-10-05T14:14:34Z"
+                      }
+                    }
+                  }
+                },
+                "invoice-paid": {
+                  "value": {
+                    "eventName": "ReferralUpdated",
+                    "payload": {
+                      "ucc": "cello-ucc",
+                      "newUserId": "new-user-id",
+                      "price": 100,
+                      "currency": "EUR"
+                    },
+                    "context": {
+                      "newUser": {
+                        "id": "new-user-id",
+                        "email": "new_user@gmail.com",
+                        "organizationId": "org-123"
+                      },
+                      "event": {
+                        "trigger": "invoice-paid",
+                        "timestamp": "2022-10-05T14:14:34Z"
+                      },
+                      "subscription": {
+                        "id": "sub-xyz",
+                        "invoiceId": "inv-abc",
+                        "interval": "monthly",
+                        "seatsUsed": 1,
+                        "productKey": "Pro Plan"
+                      }
+                    }
+                  }
+                },
+                "charge-refunded": {
+                  "value": {
+                    "eventName": "ReferralUpdated",
+                    "payload": {
+                      "ucc": "cello-ucc",
+                      "newUserId": "new-user-product-user-id",
+                      "price": 1000,
+                      "currency": "EUR"
+                    },
+                    "context": {
+                      "newUser": {
+                        "id": "new-user-product-user-id",
+                        "email": "new-user@gmail.com",
+                        "organizationId": "new-user-organization-id"
+                      },
+                      "event": {
+                        "trigger": "charge-refunded",
+                        "timestamp": "2022-10-05 14:14:34"
+                      },
+                      "subscription": {
+                        "id": "845739hjsd8342i34",
+                        "invoiceId": "34hsjdh34jfksd"
+                      }
+                    }
+                  }
+                },
+                "demo-call-attended": {
+                  "value": {
+                    "eventName": "ReferralUpdated",
+                    "payload": {
+                      "ucc": "cello-ucc",
+                      "newUserId": "product-user-id"
+                    },
+                    "context": {
+                      "newUser": {
+                        "id": "new-user-product-user-id",
+                        "email": "new_user@gmail.com",
+                        "name": "New user name",
+                        "organizationId": "new-user-organization-id"
+                      },
+                      "event": {
+                        "trigger": "demo-call-attended",
+                        "timestamp": "2022-10-05 14:14:34"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "example": {
+                    "success": true
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed or invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TokenRequest": {
+        "type": "object",
+        "description": "Use this schema to exchange accessKeyId and secretAccessKey for tokens.",
+        "required": [
+          "accessKeyId",
+          "secretAccessKey"
+        ],
+        "properties": {
+          "accessKeyId": {
+            "type": "string"
+          },
+          "secretAccessKey": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "description": "Use this schema to exchange a refreshToken for a new accessToken.",
+        "required": [
+          "refreshToken"
+        ],
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "TokenResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "type": "integer"
+          },
+          "refreshTokenExpiresIn": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "expiresIn",
+          "refreshTokenExpiresIn"
+        ],
+        "description": "Returned when exchanging accessKeyId and secretAccessKey for tokens."
+      },
+      "RefreshTokenResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "accessToken",
+          "expiresIn"
+        ],
+        "description": "Returned when exchanging a refreshToken for a new accessToken."
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ReferralCodeValidation": {
+        "type": "object",
+        "required": [
+          "code",
+          "valid"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "productUserId": {
+            "type": "string"
+          },
+          "valid": {
+            "type": "boolean"
+          },
+          "campaignId": {
+            "type": "string"
+          }
+        }
+      },
+      "ActiveLinkResponse": {
+        "type": "object",
+        "required": [
+          "activeUcc",
+          "link"
+        ],
+        "properties": {
+          "activeUcc": {
+            "type": "string",
+            "description": "Active referral code"
+          },
+          "link": {
+            "type": "string",
+            "description": "Full invite link"
+          }
+        }
+      },
+      "EventEnvelope": {
+        "type": "object",
+        "required": [
+          "eventName",
+          "payload",
+          "context"
+        ],
+        "properties": {
+          "eventName": {
+            "type": "string",
+            "enum": [
+              "ReferralUpdated"
+            ]
+          },
+          "payload": {
+            "$ref": "#/components/schemas/EventPayload"
+          },
+          "context": {
+            "$ref": "#/components/schemas/EventContext"
+          }
+        }
+      },
+      "EventPayload": {
+        "type": "object",
+        "required": [
+          "ucc",
+          "newUserId"
+        ],
+        "properties": {
+          "ucc": {
+            "type": "string"
+          },
+          "newUserId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        }
+      },
+      "EventContext": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "object",
+            "properties": {
+              "trigger": {
+                "type": "string",
+                "enum": [
+                  "new-signup",
+                  "demo-call-attended",
+                  "invoice-paid",
+                  "charge-refunded"
+                ]
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "trigger",
+              "timestamp"
+            ]
+          },
+          "newUser": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "name": {
+                "type": "string"
+              },
+              "organizationId": {
+                "type": "string"
+              }
+            }
+          },
+          "subscription": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "invoiceId": {
+                "type": "string"
+              },
+              "interval": {
+                "type": "string",
+                "enum": [
+                  "one-time",
+                  "weekly",
+                  "bi-weekly",
+                  "monthly",
+                  "quarterly",
+                  "semi-annual",
+                  "yearly",
+                  "biennial",
+                  "triennial",
+                  "lifetime"
+                ]
+              },
+              "seatsUsed": {
+                "type": "integer"
+              },
+              "productKey": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "RewardEligibilityResponse": {
+        "type": "object",
+        "required": [
+          "eligible"
+        ],
+        "properties": {
+          "eligible": {
+            "type": "boolean",
+            "description": "Whether the user is eligible for a new user discount"
+          },
+          "reward": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Reward"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Discount details if eligible"
+          },
+          "signupId": {
+            "type": "string",
+            "description": "Unique identifier for the signup record"
+          },
+          "signupAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the user signed up"
+          },
+          "referralUcc": {
+            "type": "string",
+            "description": "The UCC (Unique Customer Code) that referred this user"
+          },
+          "campaignId": {
+            "type": "string",
+            "description": "The campaign ID associated with the signup"
+          },
+          "campaignRevision": {
+            "type": "string",
+            "description": "The campaign revision used for the reward calculation"
+          }
+        }
+      },
+      "Reward": {
+        "type": "object",
+        "required": [
+          "type",
+          "interval"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "custom"
+            ],
+            "description": "\"standard\" or \"custom\" discount type"
+          },
+          "interval": {
+            "type": "string",
+            "description": "Always \"month\" (billing interval)"
+          },
+          "intervalCount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Number of months the discount applies (null for custom)"
+          },
+          "percentage": {
+            "type": "number",
+            "nullable": true,
+            "description": "Discount percentage (null for standard)"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
