@@ -94,6 +94,8 @@ apis:
   - type: OpenAPI
     url: openapi/cello-token-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/cello-openapi-overlay.yaml
 - type: DomainSecurity
   url: security/cello-domain-security.yml
 - type: AgenticAccess
