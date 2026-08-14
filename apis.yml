@@ -12,17 +12,22 @@ description: >-
   Descript, Pleo, and SmallPDF. Backed by HV Capital.
 url: https://raw.githubusercontent.com/api-evangelist/cello/refs/heads/main/apis.yml
 accessModel:
-  pricing: unknown
+  pricing: freemium
   onboarding: self-serve
   trial: false
   try_now: false
   public: false
   label: Self-serve signup
-  confidence: medium
+  confidence: high
   source:
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  - plans
+  generated: '2026-08-13'
+  method: searched
+  note: >-
+    List pricing is published for both product lines. Partner Referrals has a $0/mo Free tier
+    (1 campaign, 10 partners); User Referrals starts at $200/mo and is metered on referral ARR,
+    not API calls. No tier gates API, SDK or MCP access.
 image: https://cello.so/wp-content/uploads/2022/12/Group-174900-1.png
 x-type: company
 x-source: vc-portfolio
@@ -32,7 +37,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 tags:
 - Company
 - Referral Marketing
@@ -154,13 +159,27 @@ common:
   url: skills/cello-track-referral-conversion.md
 - type: AgentSkill
   url: skills/cello-fetch-and-reward-referee.md
+- type: AgentSkill
+  url: skills/cello-referral-integration.md
+- type: AgentCard
+  url: a2a/cello-a2a.yml
+- type: WellKnown
+  url: well-known/cello-well-known.yml
+- type: OAuthScopes
+  url: scopes/cello-scopes.yml
+- type: ToolCrosswalk
+  url: mcp/cello-tool-crosswalk.yml
+- type: Plans
+  url: plans/cello-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cello-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 11
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
