@@ -1,40 +1,170 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://github.com/getcello
+source:
+- https://registry.npmjs.org/@getcello/cello-react-native
+- https://repo1.maven.org/maven2/so/cello/android/cello-sdk/maven-metadata.xml
+- https://trunk.cocoapods.org/api/v1/pods/CelloSDK
+- https://pub.dev/api/packages/cello_sdk
+- https://github.com/getcello
+- https://docs.cello.so/sdk/introduction
 note: >-
-  First-party Cello client libraries. Cello's web SDKs (Attribution JS, Referral
-  Component / cello-js) load from the assets.cello.so CDN rather than a package
-  registry; the mobile SDKs are published as source in the getcello GitHub org.
-  No npm/PyPI/Maven registry package was found under a Cello namespace at probe time.
+  First-party Cello client libraries. Every mobile SDK is published to a real registry — npm for
+  React Native, Maven Central for Android, CocoaPods and Swift Package Manager for iOS, pub.dev for
+  Flutter — which a previous round missed. The two web SDKs (Cello JS and Attribution JS) are not
+  registry packages: they load from the assets.cello.so CDN at an unpinned /latest/ path, so a
+  consumer cannot pin or identify a version.
+currency_summary: >-
+  The Android SDK is the release train: so.cello.android:cello-sdk shipped 0.14.0 on 2026-08-07,
+  and getcello/cello-ios-sp carries a matching 0.14.0 Swift Package tag. Two distributions of the
+  same SDK have fallen behind that train — the CocoaPods pod CelloSDK is still 0.9.0 from
+  2025-09-08 (five minor releases and eleven months stale), and the npm React Native wrapper is
+  0.13.0 from 2026-04-25 while its repo already tags v0.14.0-rc.0. The Flutter plugin is a single
+  0.0.1 release from 2025-12-16 and is labelled Beta in the docs. Cello's own Android install
+  snippet still pins 0.9.1 (2025-09-09), five releases behind what it publishes.
 packages:
-  - language: swift
-    registry: swift-package-manager
-    name: cello-ios-sp
-    url: https://github.com/getcello/cello-ios-sp
-    install: "Add https://github.com/getcello/cello-ios-sp as a Swift Package dependency"
-    official: true
-  - language: objective-c
-    registry: github
-    name: cello-ios
-    url: https://github.com/getcello/cello-ios
-    install: "See repo README"
-    official: true
-  - language: kotlin
-    registry: github
-    name: cello-android
-    url: https://github.com/getcello/cello-android
-    install: "See repo README"
-    official: true
-  - language: typescript
-    registry: github
-    name: cello-react-native
-    url: https://github.com/getcello/cello-react-native
-    install: "React Native wrapper bridging the iOS and Android SDKs; see repo README"
-    official: true
-  - language: javascript
-    registry: cdn
-    name: cello-attribution.js
-    url: https://assets.cello.so/attribution/latest/cello-attribution.js
-    install: '<script type="module" async src="https://assets.cello.so/attribution/latest/cello-attribution.js"></script>'
-    sandbox_url: https://assets.sandbox.cello.so/attribution/latest/cello-attribution.js
-    official: true
+- language: kotlin
+  registry: maven-central
+  name: so.cello.android:cello-sdk
+  version: 0.14.0
+  published: '2026-08-07'
+  url: https://repo1.maven.org/maven2/so/cello/android/cello-sdk/
+  source: https://github.com/getcello/cello-android
+  install: 'implementation("so.cello.android:cello-sdk:0.14.0")'
+  official: true
+  release_count: 24
+  first_published: '2024-04-23'
+  note: >-
+    The most current Cello distribution. Cello's own install snippet at
+    https://docs.cello.so/sdk/mobile/android still pins 0.9.1 (published 2025-09-09) — five minor
+    releases behind the artifact Cello ships.
+- language: swift
+  registry: swift-package-manager
+  name: cello-ios-sp
+  version: 0.14.0
+  published: null
+  url: https://github.com/getcello/cello-ios-sp
+  install: 'Add https://github.com/getcello/cello-ios-sp as a Swift Package dependency'
+  official: true
+  version_source: git tag (git ls-remote --tags), tags 0.1.0 through 0.14.0
+  note: >-
+    Swift Package Manager has no registry metadata endpoint, so the version is read from the repo
+    tags and the publish date is unavailable without the GitHub API (rate-limited at probe time);
+    recorded as null rather than guessed. Tag 0.14.0 matches the Maven Central release, so the SPM
+    channel is current.
+- language: swift
+  registry: cocoapods
+  name: CelloSDK
+  version: 0.9.0
+  published: '2025-09-08'
+  url: https://cocoapods.org/pods/CelloSDK
+  install: "pod 'CelloSDK'"
+  official: true
+  release_count: 24
+  note: >-
+    STALE. The pod trunk's newest version is 0.9.0 from 2025-09-08, while the same iOS SDK is at
+    0.14.0 on Swift Package Manager and the Android twin shipped 0.14.0 on 2026-08-07. An iOS
+    developer following Cello's CocoaPods option gets an eleven-month-old build; the Swift Package
+    Manager option gets current code. Cello documents both without noting the difference.
+- language: typescript
+  registry: npm
+  name: '@getcello/cello-react-native'
+  version: 0.13.0
+  published: '2026-04-25'
+  url: https://www.npmjs.com/package/@getcello/cello-react-native
+  source: https://github.com/getcello/cello-react-native
+  install: 'npm install @getcello/cello-react-native'
+  official: true
+  release_count: 45
+  first_published: '2024-04-27'
+  note: >-
+    React Native wrapper bridging the iOS and Android SDKs. One minor release behind the native
+    SDKs; the repo already carries a v0.14.0-rc.0 tag that has not been published to npm.
+- language: dart
+  registry: pub.dev
+  name: cello_sdk
+  version: 0.0.1
+  published: '2025-12-16'
+  url: https://pub.dev/packages/cello_sdk
+  install: 'flutter pub add cello_sdk'
+  official: true
+  release_count: 1
+  status: beta
+  note: >-
+    Flutter plugin wrapper for the Cello iOS and Android SDKs. Marked Beta in Cello's docs, and
+    the registry confirms it: one release, 0.0.1, unchanged since 2025-12-16.
+- language: javascript
+  registry: cdn
+  name: cello.js
+  version: null
+  published: null
+  url: https://assets.cello.so/app/latest/cello.js
+  sandbox_url: https://assets.sandbox.cello.so/app/latest/cello.js
+  install: '<script type="module" src="https://assets.cello.so/app/latest/cello.js" async></script>'
+  official: true
+  last_modified: '2026-08-12'
+  http_status: 200
+  bytes: 456493
+  note: >-
+    Cello JS, the embeddable Referral Component. Distribution is an UNPINNED CDN path — /latest/
+    floats, there is no versioned URL and no registry metadata endpoint, so neither we nor a
+    consumer can tell which build is being served. The only currency signal is the Last-Modified
+    header, 2026-08-12, which shows the bundle is actively shipping. version recorded as null
+    because there is nothing to read, not because it was not checked.
+- language: javascript
+  registry: cdn
+  name: cello-attribution.js
+  version: null
+  published: null
+  url: https://assets.cello.so/attribution/latest/cello-attribution.js
+  sandbox_url: https://assets.sandbox.cello.so/attribution/latest/cello-attribution.js
+  install: '<script type="module" src="https://assets.cello.so/attribution/latest/cello-attribution.js" async></script>'
+  official: true
+  last_modified: '2026-08-12'
+  http_status: 200
+  bytes: 55587
+  note: >-
+    Attribution JS, the referral-code capture library. Same unpinned /latest/ CDN distribution as
+    cello.js — no version to read, Last-Modified 2026-08-12. See findings: Cello's own published
+    Agent Skill hands agents a different filename for this file, and that filename 403s.
+findings:
+- id: agent-skill-serves-a-403-script-url
+  severity: high
+  detail: >-
+    Cello's published Agent Skill at
+    https://docs.cello.so/.well-known/agent-skills/cello/skill.md tells agents to install
+    Attribution JS from https://assets.cello.so/attribution/latest/attribution.js (and the sandbox
+    equivalent). That URL returns 403. The working file, and the one Cello's human docs use at
+    https://docs.cello.so/sdk/client-side/embedded-script-tag, is cello-attribution.js. An agent
+    following Cello's own machine-readable skill writes a broken script tag.
+  evidence:
+  - url: https://assets.cello.so/attribution/latest/attribution.js
+    status: 403
+  - url: https://assets.cello.so/attribution/latest/cello-attribution.js
+    status: 200
+- id: cocoapods-channel-abandoned
+  severity: medium
+  detail: >-
+    CelloSDK on CocoaPods last shipped 0.9.0 on 2025-09-08; the same SDK is 0.14.0 on Swift Package
+    Manager and Maven Central. Cello documents CocoaPods as install Option 1 for iOS, ahead of
+    Swift Package Manager, with no note that the pod is behind.
+  evidence:
+  - url: https://trunk.cocoapods.org/api/v1/pods/CelloSDK
+    status: 200
+- id: install-snippet-behind-published-artifact
+  severity: low
+  detail: >-
+    The Android install snippet pins so.cello.android:cello-sdk:0.9.1 (2025-09-09) while Maven
+    Central serves 0.14.0 (2026-08-07).
+  evidence:
+  - url: https://docs.cello.so/sdk/mobile/android
+    status: 200
+  - url: https://repo1.maven.org/maven2/so/cello/android/cello-sdk/maven-metadata.xml
+    status: 200
+- id: no-server-side-sdk
+  severity: info
+  detail: >-
+    Cello ships no server-side SDK in any language — no npm, PyPI, Maven, NuGet, Go, RubyGems,
+    Packagist or crates.io package wraps the REST API. Every first-party library is a client-side
+    or mobile referral component. Server integration is raw HTTP against api.cello.so.
+x-evidence:
+  fetched: '2026-08-13'

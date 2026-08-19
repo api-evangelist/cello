@@ -1,0 +1,154 @@
+generated: '2026-08-13'
+method: derived
+source:
+- https://docs.cello.so/mcp/tools
+- https://docs.cello.so/mcp/developers/tools
+- https://docs.cello.so/mcp/growth/tools
+- openapi/_original/cello-openapi-original.json
+summary: >-
+  Cello's MCP server and Cello's REST API are two disjoint surfaces. The eight published MCP tools
+  are read-only analytics, integration-health and documentation tools that report on a configured
+  referral program; the six REST operations are write-and-lookup primitives for embedding the
+  program in a product. Not one MCP tool is backed by a public REST operation, and not one REST
+  operation has a tool. The crosswalk is therefore all mcp_only and all rest_only — a real
+  finding, not a mapping failure. The live MCP schema is OAuth-gated (POST tools/list returns 401
+  with a WWW-Authenticate resource_metadata challenge), so tool parameters below are taken from
+  Cello's own published tool reference, never guessed.
+surfaces:
+  openapi: openapi/_original/cello-openapi-original.json
+  openapi_operations: 6
+  rest_base: https://api.cello.so
+  mcp_url: https://mcp.cello.so/mcp
+  mcp_gated: true
+  mcp_auth: oauth
+  mcp_tool_docs: https://docs.cello.so/mcp/tools
+  graphql: null
+coverage:
+  mcp_tools: 8
+  rest_operations: 6
+  bound: 0
+  mcp_only: 8
+  rest_only: 6
+  binding_rate: 0.0
+crosswalk: []
+mcp_only:
+- tool: cello_get_program_metrics
+  category: analytics
+  reason: >-
+    Returns lifetime referrer and new-user funnel totals, ARR, weekly/monthly trend series, and
+    GTM-segmented industry benchmarks. No public REST operation exposes program metrics,
+    benchmarks, or any aggregate; this is Growth Portal data with no REST equivalent.
+  audience: growth
+- tool: cello_get_referrers
+  category: analytics
+  reason: >-
+    Lists and sorts referrers by engagement/performance. Parameters filter (matches ucc, email,
+    productUserId, or referrer id), page (1-indexed, 10 per page), sort (net new ARR default;
+    also revenue, signups, purchases, unique views, recent activity). The REST API has no
+    referrer list or search operation — its only referrers path is
+    POST /referrers/{productUserId}/depersonalize, a GDPR erasure write.
+  audience: growth
+- tool: cello_get_top_referrers
+  category: analytics
+  reason: >-
+    Top referrers by net new ARR, descending. Parameter page (1-indexed, 10 per page). No REST
+    ranking or leaderboard operation exists.
+  audience: growth
+- tool: cello_get_integration_status
+  category: diagnostics
+  reason: >-
+    Per-component connectionStatus (connected / connectedWithWarnings / notConnected), optional
+    warningType, and lastEventReceived for the referral widget, attribution widget, signup
+    tracking and purchase tracking. Portal telemetry; no REST health or status operation.
+  audience: developer
+- tool: cello_get_events
+  category: diagnostics
+  reason: >-
+    Reads back recent events Cello received, newest first, with source, validation status and a
+    per-field breakdown (ucc, productUserId, email, customerId). The REST API is write-only for
+    events (POST /events); there is no GET /events, so this tool exposes data the REST surface
+    cannot return.
+  audience: developer
+  near_miss: POST /events
+  near_miss_note: >-
+    Same domain object, opposite direction. The REST operation ingests an event; the tool reads
+    the ingestion log. Deliberately NOT bound — binding them would claim an inverse relationship
+    the API does not offer.
+- tool: cello_get_recommendations
+  category: analytics
+  reason: >-
+    Prioritized best-practice recommendations grouped by activation, sharing and conversion, with
+    completed/pending status, effort and impact labels. Derived program advice; no REST analogue.
+  audience: both
+- tool: search_cello
+  category: documentation
+  reason: Knowledge-base search over Cello docs, code examples and API references. Not an API operation.
+  audience: both
+- tool: query_docs_filesystem_cello
+  category: documentation
+  reason: >-
+    Read-only query interface over an in-memory filesystem of the Cello documentation pages and
+    OpenAPI specs — path reads, exact keyword and regex search. Not an API operation.
+  audience: both
+rest_only:
+- path: /token
+  method: post
+  operation: POST /token
+  summary: >-
+    Exchange accessKeyId + secretAccessKey (or a refreshToken) for an accessToken. Credential
+    exchange for the REST API; MCP clients authenticate over OAuth against auth.cello.so instead,
+    so no tool needs it.
+  reason: no-tool
+- path: /referral-codes/{code}
+  method: get
+  operation: GET /referral-codes/{code}
+  summary: Validate a referral code (ucc) and discover the associated user and campaign.
+  reason: no-tool
+- path: /referral-codes/active-link/{productUserId}
+  method: get
+  operation: GET /referral-codes/active-link/{productUserId}
+  summary: Retrieve an active ucc and invite link for a user, for contextual sharing.
+  reason: no-tool
+- path: /new-users/{productUserId}/reward
+  method: get
+  operation: GET /new-users/{productUserId}/reward
+  summary: Retrieve new-user reward (discount) eligibility and referral information.
+  reason: no-tool
+- path: /referrers/{productUserId}/depersonalize
+  method: post
+  operation: POST /referrers/{productUserId}/depersonalize
+  summary: Depersonalize a referrer — the data-subject erasure path.
+  reason: no-tool
+  note: >-
+    A destructive privacy operation with no MCP tool, which is consistent with Cello's stated
+    posture that all MCP tools are read-only.
+- path: /events
+  method: post
+  operation: POST /events
+  summary: Report referral events such as signups, purchases and refunds.
+  reason: no-tool
+findings:
+- id: disjoint-surfaces
+  detail: >-
+    Zero of eight MCP tools bind to a REST operation and zero of six REST operations have a tool.
+    The MCP server exposes Growth Portal reporting that has no public REST API behind it, and the
+    REST API exposes integration primitives that have no tool. An agent given the MCP server can
+    observe a Cello program but cannot operate one; an agent given the REST API can operate one
+    but cannot observe it.
+- id: no-operation-ids
+  detail: >-
+    The published OpenAPI declares no operationId on any of its six operations, so REST rows here
+    are identified by method + path. Any future binding will need operationIds added upstream.
+- id: gated-schema
+  detail: >-
+    tools/list at https://mcp.cello.so/mcp returns 401 with
+    WWW-Authenticate: Bearer resource_metadata="https://mcp.cello.so/.well-known/oauth-protected-resource".
+    Tool names and parameters here come from Cello's published tool reference; the authoritative
+    inputSchema still requires an authenticated introspection.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://mcp.cello.so/mcp', http_status: 401, note: 'POST tools/list, OAuth challenge'}
+  - {url: 'https://docs.cello.so/mcp/tools.md', http_status: 200}
+  - {url: 'https://docs.cello.so/mcp/developers/tools.md', http_status: 200}
+  - {url: 'https://docs.cello.so/mcp/growth/tools.md', http_status: 200}

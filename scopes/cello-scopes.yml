@@ -1,0 +1,81 @@
+generated: '2026-08-13'
+method: probed
+source: https://mcp.cello.so/.well-known/oauth-protected-resource
+docs: https://docs.cello.so/mcp/introduction
+summary: >-
+  Cello's OAuth surface belongs to the hosted MCP server, not to the REST API. The MCP server
+  publishes RFC 9728 protected-resource metadata declaring two resource scopes, mcp:read and
+  mcp:write, and names https://auth.cello.so as its authorization server. The REST API at
+  api.cello.so declares no oauth2 securityScheme and no scopes at all — it authenticates with an
+  accessKeyId/secretAccessKey exchange at POST /token that returns an opaque bearer accessToken,
+  which carries no scope claim in any documented response.
+resource:
+  identifier: https://mcp.cello.so
+  authorization_servers:
+  - https://auth.cello.so
+  bearer_methods_supported:
+  - header
+scopes:
+- name: mcp:read
+  source: https://mcp.cello.so/.well-known/oauth-protected-resource
+  description: >-
+    Read access to the Cello MCP server. Cello's own tool reference states that all MCP tools are
+    currently read-only, so this is the scope every published tool needs — program metrics,
+    referrers, top referrers, integration status, events, recommendations, knowledge-base search,
+    and the docs filesystem query.
+  applies_to_tools:
+  - cello_get_program_metrics
+  - cello_get_referrers
+  - cello_get_top_referrers
+  - cello_get_integration_status
+  - cello_get_events
+  - cello_get_recommendations
+  - search_cello
+  - query_docs_filesystem_cello
+  evidence: https://docs.cello.so/mcp/tools
+- name: mcp:write
+  source: https://mcp.cello.so/.well-known/oauth-protected-resource
+  description: >-
+    Write access to the Cello MCP server. Advertised in the protected-resource metadata but not
+    exercised by any tool Cello currently documents; the tool reference says the assistant points
+    you to the Cello Portal to make changes. Recorded as declared-but-unused.
+  applies_to_tools: []
+  status: declared-unused
+authorization_server:
+  issuer: https://auth.cello.so
+  metadata: ../well-known/cello-oauth-authorization-server.json
+  authorization_endpoint: https://auth.cello.so/oauth2/auth
+  token_endpoint: https://auth.cello.so/oauth2/token
+  registration_endpoint: https://auth.cello.so/oauth2/register
+  revocation_endpoint: https://auth.cello.so/oauth2/revoke
+  jwks_uri: https://auth.cello.so/.well-known/jwks.json
+  grant_types_supported:
+  - authorization_code
+  - implicit
+  - client_credentials
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:device_code
+  code_challenge_methods_supported:
+  - plain
+  - S256
+  scopes_supported:
+  - offline_access
+  - offline
+  - openid
+  note: >-
+    The authorization server advertises only the three OIDC/offline scopes in scopes_supported;
+    the mcp:read and mcp:write resource scopes appear solely in the MCP protected-resource
+    document. A client requesting them relies on the resource indicator, not on the AS metadata.
+rest_api:
+  oauth2: false
+  note: >-
+    No oauth2 securityScheme in openapi/_original/cello-openapi-original.json — the only scheme is
+    bearerAuth (type http, scheme bearer). derive-oauth-scopes.py reports 0 oauth2 schemes for
+    this provider; nothing here was derived from the spec.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://mcp.cello.so/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://auth.cello.so/.well-known/oauth-authorization-server', http_status: 200}
+  - {url: 'https://auth.cello.so/.well-known/openid-configuration', http_status: 200}
+  - {url: 'https://mcp.cello.so/mcp', http_status: 401, note: 'POST tools/list returned WWW-Authenticate: Bearer resource_metadata=...'}

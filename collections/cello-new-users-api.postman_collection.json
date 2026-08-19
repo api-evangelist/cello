@@ -1,0 +1,200 @@
+{
+  "item": [
+    {
+      "id": "7fe7b5ef-efaf-4945-9b36-084ad8c441ce",
+      "name": "New Users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "678ab610-5f05-46f2-8aa5-7106de69f85a",
+          "name": "Retrieve details on eligibility for the new user reward (discount) and referral information.",
+          "request": {
+            "name": "Retrieve details on eligibility for the new user reward (discount) and referral information.",
+            "description": {
+              "content": "Retrieve details on eligibility for the new user reward (discount) and referral information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "new-users",
+                ":productUserId",
+                "reward"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productUserId",
+                  "description": "(Required) The Id of the user you want to check"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "da698110-e2d1-4946-8975-90a40d2757ad",
+              "name": "New user reward and eligibility information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "new-users",
+                    ":productUserId",
+                    "reward"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productUserId",
+                      "description": "(Required) The Id of the user you want to check"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"eligible\": true,\n  \"reward\": {\n    \"type\": \"standard\",\n    \"interval\": \"month\",\n    \"intervalCount\": 3,\n    \"percentage\": 20\n  },\n  \"signupId\": \"signup_abc123\",\n  \"signupAt\": \"2024-01-15T10:30:00Z\",\n  \"referralUcc\": \"ucc_xyz789\",\n  \"campaignId\": \"campaign_id_123\",\n  \"campaignRevision\": \"v2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "558065f8-c31e-4ded-83b4-b3b0db05e020",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "new-users",
+                    ":productUserId",
+                    "reward"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productUserId",
+                      "description": "(Required) The Id of the user you want to check"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.cello.so",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cfd28cea-6e5e-49f5-ba57-29670a1f2c57",
+    "name": "Cello Events New Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Cello referral platform",
+      "type": "text/plain"
+    }
+  }
+}

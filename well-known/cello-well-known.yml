@@ -1,0 +1,157 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* on every Cello host in apis.yml plus the MCP and auth hosts
+summary: >-
+  Cello serves a real /.well-known/ discovery surface, but only on two hosts and only for the
+  agent/OAuth surfaces. docs.cello.so serves an A2A agent card (and the agent skill it points at).
+  mcp.cello.so serves RFC 9728 OAuth protected-resource metadata for the hosted MCP server, which
+  names https://auth.cello.so as the authorization server; auth.cello.so serves full RFC 8414
+  authorization-server metadata and an identical OpenID Connect discovery document. The marketing
+  site (cello.so) and the REST API host (api.cello.so) serve nothing at /.well-known/ — no
+  security.txt, no api-catalog, no ai-plugin.json. cello.so answers every /.well-known/* path with
+  its 404 HTML page (SPA-style catch-all); api.cello.so answers with a JSON {"message":"Not Found"}.
+hosts:
+- host: https://docs.cello.so
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/cello-agent-card.json
+    note: A2A agent card; graded in a2a/cello-a2a.yml
+  - path: /.well-known/agent-skills/cello/skill.md
+    status: 200
+    file: ../skills/cello-referral-integration.md
+    note: 13,290-byte Agent Skill document referenced by the agent card
+  - path: /llms.txt
+    status: 200
+    file: ../llms/cello-llms.txt
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+    note: >-
+      The docs host does publish the real spec, but one level down at
+      https://docs.cello.so/api-reference/openapi.json (200, the same Cello API 3.1.0 document
+      already captured in openapi/_original/).
+- host: https://mcp.cello.so
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: cello-oauth-protected-resource.json
+    note: >-
+      RFC 9728. Declares resource https://mcp.cello.so, authorization server
+      https://auth.cello.so, scopes mcp:read and mcp:write, bearer via header.
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://auth.cello.so
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: cello-oauth-authorization-server.json
+    note: >-
+      RFC 8414 metadata. Issuer https://auth.cello.so, authorization_code / client_credentials /
+      device_code / refresh_token grants, PKCE S256, dynamic client registration at
+      /oauth2/register. Discovered from the MCP protected-resource document, not from apis.yml.
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: cello-openid-configuration.json
+    note: Byte-identical to the oauth-authorization-server document.
+- host: https://api.cello.so
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /swagger.json
+    status: 404
+  - path: /docs
+    status: 404
+- host: https://cello.so
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  note: >-
+    Every path returns the site's 404 HTML shell (70,037 bytes, text/html) with a 404 status, so
+    nothing here is a document.
+findings:
+- id: no-security-txt
+  severity: low
+  detail: >-
+    Cello serves no /.well-known/security.txt on any host, and publishes no vulnerability
+    disclosure policy, bug bounty, or trust center page (probed separately). There is no
+    machine-discoverable way to report a security issue.
+  evidence:
+  - url: https://cello.so/.well-known/security.txt
+    status: 404
+  - url: https://api.cello.so/.well-known/security.txt
+    status: 404
+  - url: https://docs.cello.so/.well-known/security.txt
+    status: 404
+- id: oauth-only-for-mcp
+  severity: info
+  detail: >-
+    The OAuth surface belongs to the MCP server, not the REST API. api.cello.so authenticates with
+    an accessKeyId/secretAccessKey exchange at POST /token returning a bearer accessToken; it
+    publishes no OAuth metadata and none of the mcp:read / mcp:write scopes apply to it.
+  evidence:
+  - url: https://mcp.cello.so/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://api.cello.so/.well-known/oauth-authorization-server
+    status: 404

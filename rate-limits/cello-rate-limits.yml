@@ -1,0 +1,46 @@
+generated: '2026-08-13'
+method: probed
+source: live unauthenticated responses from https://api.cello.so plus a full read of https://docs.cello.so
+limit_count: 0
+summary: >-
+  Cello publishes no rate limits. Every page in the docs index (86 pages, read via
+  https://docs.cello.so/llms.txt) was searched for limits, throttling, quotas and 429s and none
+  document a request ceiling, a window, a burst allowance, or a per-key/per-account policy. The
+  pricing page meters referral ARR and partner counts, not API calls, and attaches no request
+  quota to any tier. Live unauthenticated responses from api.cello.so return no rate-limit headers
+  of any family — no X-RateLimit-*, no RateLimit-*, no Retry-After. An integrator cannot tell from
+  the docs or from the runtime what the ceiling is, or whether one exists.
+documented_limits: []
+response_headers:
+  observed: []
+  x_ratelimit_family: false
+  ratelimit_draft_family: false
+  retry_after: false
+  note: >-
+    Headers observed on a live 401 from GET https://api.cello.so/referral-codes/{code}: date,
+    content-type, content-length, www-authenticate, apigw-requestid. On a live 401 from
+    POST https://api.cello.so/token: the Helmet security-header set (CSP, HSTS, X-Frame-Options,
+    X-Content-Type-Options, Referrer-Policy, COOP/CORP), etag, vary, and apigw-requestid. No
+    rate-limit signaling in either.
+exhaustion:
+  status_code: null
+  body: null
+  note: Not observed; no limit was reached and no limit is documented.
+infrastructure:
+  gateway: AWS API Gateway
+  evidence: >-
+    Every api.cello.so response carries an apigw-requestid header, the AWS API Gateway request
+    identifier. API Gateway supports usage plans with throttle and quota settings, so a limit may
+    well be enforced at the edge — but nothing in the response surface or the docs tells a client
+    what it is.
+  note: >-
+    apigw-requestid is the only correlation identifier Cello returns; it is not documented as a
+    support handle anywhere in the docs.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://api.cello.so/referral-codes/TESTCODE123', http_status: 401, note: 'no rate-limit headers'}
+  - {url: 'https://api.cello.so/token', http_status: 401, note: 'POST with invalid credentials; no rate-limit headers'}
+  - {url: 'https://docs.cello.so/llms.txt', http_status: 200, note: '86 documented pages; none is a limits/quotas page'}
+  - {url: 'https://docs.cello.so/api-reference/introduction.md', http_status: 200, note: 'base URLs and auth only, no limits section'}
+  - {url: 'https://cello.so/pricing/', http_status: 200, note: 'no API-call quota or overage on any tier'}

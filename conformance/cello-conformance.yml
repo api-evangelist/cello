@@ -1,37 +1,118 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 source:
-  - openapi/cello-openapi-original.json
-  - https://www.cello.so/
-  - https://cello.so/privacy-policy/
+- openapi/_original/cello-openapi-original.json
+- https://mcp.cello.so/.well-known/oauth-protected-resource
+- https://auth.cello.so/.well-known/oauth-authorization-server
+- https://docs.cello.so/.well-known/agent-card.json
+- https://www.cello.so/
+- https://cello.so/privacy-policy/
 standards:
-  - id: oauth2
-    conforms: false
-    evidence: REST API uses http bearer tokens (bearerAuth), not OAuth2 flows; MCP server uses OAuth
-  - id: bearer-token-auth
-    conforms: true
-    evidence: openapi securityScheme bearerAuth (type http, scheme bearer)
-  - id: openapi-3.1
-    conforms: true
-    evidence: openapi/cello-openapi-original.json declares openapi 3.1.0
-  - id: rfc9457-problem-details
-    conforms: false
-    evidence: error responses use a simple {message} envelope, not application/problem+json
-  - id: gdpr
-    conforms: true
-    evidence: cello.so states GDPR compliance; API exposes a referrer depersonalize operation for data-subject requests
-  - id: ccpa
-    conforms: true
-    evidence: cello.so states CCPA compliance
-  - id: soc2
-    conforms: false
-    status: in-progress
-    evidence: cello.so states "SOC-II coming soon"
-  - id: mcp
-    conforms: true
-    evidence: official hosted MCP server at https://mcp.cello.so/mcp (x-mint.mcp.enabled in spec)
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/_original/cello-openapi-original.json declares openapi 3.1.0
+- id: bearer-token-auth
+  conforms: true
+  evidence: openapi securityScheme bearerAuth (type http, scheme bearer) on all six operations
+- id: oauth2
+  conforms: true
+  scope: mcp-only
+  evidence: >-
+    The hosted MCP server authenticates with OAuth 2.0 against https://auth.cello.so —
+    authorization_code, client_credentials, refresh_token and device_code grants, PKCE S256,
+    dynamic client registration at /oauth2/register. The REST API does NOT use OAuth; it uses an
+    accessKeyId/secretAccessKey exchange returning a bearer token.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://auth.cello.so/.well-known/oauth-authorization-server returns 200 with full AS metadata
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    https://mcp.cello.so/.well-known/oauth-protected-resource returns 200 declaring the resource,
+    authorization server, mcp:read / mcp:write scopes and header bearer method; the 401 challenge
+    from the MCP endpoint carries the matching WWW-Authenticate resource_metadata pointer.
+- id: oidc
+  conforms: true
+  scope: auth-server-only
+  evidence: >-
+    https://auth.cello.so/.well-known/openid-configuration returns 200 (byte-identical to the
+    RFC 8414 document) with issuer, jwks_uri, userinfo_endpoint, RS256 id_token signing and the
+    openid scope. This is the MCP/portal identity provider, not an API-consumer surface.
+- id: mcp
+  conforms: true
+  evidence: >-
+    Official hosted MCP server at https://mcp.cello.so/mcp (plus a sandbox at
+    https://mcp.sandbox.cello.so/mcp); x-mint.mcp.enabled true in the spec; eight published
+    read-only tools documented at https://docs.cello.so/mcp/tools.
+- id: a2a
+  conforms: true
+  grade: conformant
+  evidence: >-
+    A2A agent card served at https://docs.cello.so/.well-known/agent-card.json (200). Passes all
+    three hard checks — capabilities is an object, protocolVersion present, skills is an array —
+    and carries preferredTransport, defaultInputModes and defaultOutputModes. Declares
+    protocolVersion 0.3, which predates A2A 1.0.0. See a2a/cello-a2a.yml.
+- id: agent-skills
+  conforms: true
+  evidence: >-
+    A packaged Agent Skill is published at
+    https://docs.cello.so/.well-known/agent-skills/cello/skill.md (200, 13,290 bytes) with
+    name/description frontmatter, referenced from the agent card.
+- id: llms-txt
+  conforms: true
+  evidence: https://docs.cello.so/llms.txt returns 200 and indexes 86 documentation pages
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Error responses use a simple {message} envelope, not application/problem+json. Live responses
+    show two different shapes ({"message":"Unauthorized"} vs a statusCode/timestamp/path/message
+    object from POST /token).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header and no published deprecation policy; see lifecycle/cello-lifecycle.yml
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No idempotency key header or parameter in the OpenAPI or the docs, including on the two write
+    operations POST /events and POST /referrers/{productUserId}/depersonalize.
+- id: rate-limit-headers
+  conforms: false
+  evidence: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers on live api.cello.so responses, and no
+    documented limits; see rate-limits/cello-rate-limits.yml
+- id: security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on cello.so, api.cello.so, docs.cello.so or mcp.cello.so (all 404)
+- id: gdpr
+  conforms: true
+  evidence: >-
+    cello.so states GDPR compliance; the API exposes POST /referrers/{productUserId}/depersonalize
+    for data-subject erasure, and the docs cover cookie-consent integration (OneTrust, CookieBot).
+- id: ccpa
+  conforms: true
+  evidence: cello.so states CCPA compliance
+- id: soc2
+  conforms: false
+  status: in-progress
+  evidence: cello.so states "SOC-II coming soon"; no trust center or attestation report is published
 compliance_program:
   published: true
   posture: [GDPR, CCPA]
   in_progress: [SOC 2 Type II]
+  certifications_published: []
+  trust_center: null
+  vulnerability_disclosure: null
   reference: https://cello.so/privacy-policy/
+  note: >-
+    probe-security-programs.py returned vdp=none trust=none on 2026-08-13. Cello publishes a
+    compliance posture in marketing copy but no named certification, no trust center, no bug
+    bounty and no disclosure policy.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://mcp.cello.so/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://auth.cello.so/.well-known/oauth-authorization-server', http_status: 200}
+  - {url: 'https://auth.cello.so/.well-known/openid-configuration', http_status: 200}
+  - {url: 'https://docs.cello.so/.well-known/agent-card.json', http_status: 200}
+  - {url: 'https://docs.cello.so/.well-known/agent-skills/cello/skill.md', http_status: 200}
+  - {url: 'https://cello.so/.well-known/security.txt', http_status: 404}

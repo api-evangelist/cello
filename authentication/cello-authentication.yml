@@ -1,12 +1,118 @@
-generated: '2026-07-18'
-method: derived
-source: openapi/cello-openapi-original.json
+generated: '2026-08-13'
+method: searched
+source:
+- https://docs.cello.so/api-reference/introduction
+- https://docs.cello.so/api-reference/authentication/get-token
+- https://mcp.cello.so/.well-known/oauth-protected-resource
+- https://auth.cello.so/.well-known/oauth-authorization-server
+- openapi/cello-token-api-openapi.yml
+docs: https://docs.cello.so/api-reference/introduction
 summary:
   types:
   - http
+  - oauth2
+  note: >-
+    Cello runs two independent authentication systems. The REST API uses a credential exchange —
+    POST /token with accessKeyId + secretAccessKey returns a short-lived bearer accessToken — and
+    declares only bearerAuth in the OpenAPI. The hosted MCP server uses full OAuth 2.0 against
+    https://auth.cello.so, with RFC 9728 protected-resource metadata, dynamic client registration
+    and PKCE. Neither system's credentials work on the other surface. A third mechanism, a
+    product-signed JWT, authenticates end users into the embedded web and mobile components.
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
+  surface: rest
+  hosts:
+  - https://api.cello.so
+  - https://api.sandbox.cello.so
+  credential_exchange:
+    endpoint: POST /token
+    unauthenticated: true
+    request_fields:
+    - accessKeyId
+    - secretAccessKey
+    refresh_fields:
+    - refreshToken
+    response_fields:
+    - accessToken
+    - refreshToken
+    - expiresIn
+    - refreshTokenExpiresIn
+    access_token_ttl_seconds: 18000
+    refresh_token_ttl_seconds: 432000
+    ttl_source: >-
+      Published response examples in the OpenAPI (expiresIn 18000 = 5 hours,
+      refreshTokenExpiresIn 432000 = 5 days).
+    issued_from: Cello Portal -> Integrations -> Access Keys (https://portal.cello.so/integrations/accesskeys)
+    environment_scoped: true
+  scopes: []
   sources:
-  - openapi/cello-openapi-original.json
+  - openapi/cello-token-api-openapi.yml
+  - openapi/cello-events-api-openapi.yml
+  - openapi/cello-new-users-api-openapi.yml
+  - openapi/cello-referral-codes-api-openapi.yml
+  - openapi/cello-referrers-api-openapi.yml
+- name: mcp-oauth
+  type: oauth2
+  surface: mcp
+  hosts:
+  - https://mcp.cello.so
+  - https://mcp.sandbox.cello.so
+  authorization_server: https://auth.cello.so
+  flows:
+  - authorization_code
+  - client_credentials
+  - refresh_token
+  - device_code
+  pkce: S256
+  dynamic_client_registration: https://auth.cello.so/oauth2/register
+  scopes:
+  - mcp:read
+  - mcp:write
+  discovery:
+    protected_resource: https://mcp.cello.so/.well-known/oauth-protected-resource
+    authorization_server: https://auth.cello.so/.well-known/oauth-authorization-server
+  ref: ../scopes/cello-scopes.yml
+  note: >-
+    Not declared in any OpenAPI — discovered by probing the MCP endpoint, which answers an
+    unauthenticated tools/list with 401 and a WWW-Authenticate resource_metadata pointer.
+- name: component-jwt
+  type: jwt
+  surface: embedded-components
+  signed_with: Product Secret (Cello Portal -> Integrations -> Access Keys)
+  identifies: the end user, via productUserId
+  used_by:
+  - Cello JS (web Referral Component)
+  - iOS / Android / React Native / Flutter SDKs
+  note: >-
+    A product-signed JWT boots the Referral Component for a specific end user. It authenticates a
+    user into the widget, not a server into the API, and is documented at
+    https://docs.cello.so/sdk/client-side/user-authentication rather than in the API reference.
+observations:
+- id: no-oauth-on-rest
+  detail: >-
+    The REST API publishes no OAuth metadata on api.cello.so — /.well-known/oauth-authorization-server
+    and /.well-known/openid-configuration both 404 — and the mcp:read / mcp:write scopes do not
+    apply to it. There is no scoped, least-privilege credential for the REST surface: an
+    accessToken is all-or-nothing across all six operations, including the destructive
+    POST /referrers/{productUserId}/depersonalize.
+- id: unauthenticated-401-shapes-differ
+  detail: >-
+    The two REST error envelopes disagree. An unauthenticated resource call returns
+    {"message":"Unauthorized"}; a bad credential exchange at POST /token returns
+    {"statusCode":401,"timestamp":"...","path":"/api/token","message":"Invalid API Credentials"} —
+    a richer NestJS-style envelope, and one that leaks an internal path prefix (/api/token) the
+    public route does not use.
+  evidence:
+  - url: https://api.cello.so/referral-codes/TESTCODE123
+    status: 401
+  - url: https://api.cello.so/token
+    status: 401
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://docs.cello.so/api-reference/authentication/get-token.md', http_status: 200}
+  - {url: 'https://mcp.cello.so/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://auth.cello.so/.well-known/oauth-authorization-server', http_status: 200}
+  - {url: 'https://api.cello.so/.well-known/oauth-authorization-server', http_status: 404}

@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cello Events Token API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cello.so/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain accessToken & refreshToken using your accessKeyId and secretAccessKey, or obtain a new accessToken using a refreshToken."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

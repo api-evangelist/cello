@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cello Events Referral Codes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Referral Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /referral-codes/{code}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cello.so/referral-codes/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Unique campaign code to validate"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Validate a referral code (UCC) and discover associated user/campaign."
+        },
+        {
+          "info": {
+            "name": "GET /referral-codes/active-link/{productUserId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cello.so/referral-codes/active-link/:productUserId",
+            "params": [
+              {
+                "name": "productUserId",
+                "value": "",
+                "type": "path",
+                "description": "Product-specific user identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve an active UCC and invite link for a given user to support contextual sharing."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

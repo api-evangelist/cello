@@ -1,10 +1,15 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 source:
-  - openapi/cello-openapi-original.json
+  - openapi/_original/cello-openapi-original.json
   - https://docs.cello.so/api-reference/introduction
+  - live unauthenticated responses from https://api.cello.so (2026-08-13)
 authentication:
   style: bearer
+  surfaces:
+    rest: bearer token from POST /token (accessKeyId + secretAccessKey exchange)
+    mcp: OAuth 2.0 against https://auth.cello.so, scopes mcp:read / mcp:write
+    components: product-signed JWT identifying the end user by productUserId
   detail: >-
     Exchange accessKeyId + secretAccessKey at POST /token for a short-lived
     accessToken (plus a refreshToken); send the accessToken in the Authorization
@@ -25,9 +30,20 @@ error_envelope:
   ref: errors/cello-problem-types.yml
 rate_limiting:
   signaled: false
-  note: No rate-limit headers or policy documented.
+  note: >-
+    No rate-limit headers of any family (X-RateLimit-*, RateLimit-*, Retry-After) on live
+    api.cello.so responses, and no documented limits anywhere in the 86-page docs index or on the
+    pricing page. The API sits behind AWS API Gateway, which may throttle at the edge, but nothing
+    tells a client what the ceiling is.
+  ref: rate-limits/cello-rate-limits.yml
 request_tracing:
-  request_id_header: null
+  request_id_header: apigw-requestid
+  documented: false
+  note: >-
+    Every api.cello.so response carries apigw-requestid, the AWS API Gateway request identifier
+    (observed on live 401s from both GET /referral-codes/{code} and POST /token). Cello does not
+    document it, does not echo a client-supplied correlation id, and does not name it as a support
+    handle — so it is a usable trace value that no integrator is told to capture.
 metadata:
   supported: false
 events:
@@ -36,3 +52,16 @@ events:
     Cello receives conversion events at POST /events and via payment-gateway
     webhooks (Stripe, Chargebee) that you configure to forward to Cello. Cello
     does not publish an outbound webhook/event catalog for consumers.
+error_shape_consistency:
+  consistent: false
+  note: >-
+    Two different envelopes on the same host. Resource operations return {"message": "..."};
+    POST /token returns {"statusCode", "timestamp", "path", "message"} and leaks an internal
+    /api/token path. Only the first shape is described in the OpenAPI (components.schemas.Error).
+  ref: errors/cello-problem-types.yml
+scopes:
+  supported: false
+  note: >-
+    The REST accessToken is unscoped — one credential grants all six operations, including the
+    destructive depersonalize write. Scoping exists only on the MCP surface (mcp:read / mcp:write).
+  ref: scopes/cello-scopes.yml

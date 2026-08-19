@@ -1,0 +1,99 @@
+generated: '2026-08-13'
+method: probed
+source: https://docs.cello.so/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.cello.so
+  note: >-
+    The card is served from Cello's own documentation host, docs.cello.so, at the canonical
+    A2A 1.0 path. The legacy /.well-known/agent.json path 404s on the same host, and every
+    other Cello host probed (cello.so, api.cello.so, mcp.cello.so) 404s on both paths, so
+    docs.cello.so is the single origin serving it.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  optional_checks:
+    preferred_transport_present: true
+    default_input_modes_present: true
+    default_output_modes_present: true
+  deviations:
+  - protocolVersion-0.3-predates-a2a-1.0.0
+  - supportedInterfaces-instead-of-additionalInterfaces
+  - interface-uses-protocolBinding-instead-of-transport
+  - no-root-description-field
+  - skills-tags-empty-array
+  - url-points-at-documentation-site-not-an-a2a-message-endpoint
+card:
+  name: Cello
+  url: https://docs.cello.so/
+  version: 1.0.0
+  provider_organization: Cello
+  documentation_url: https://docs.cello.so/
+  capabilities:
+    streaming: false
+    pushNotifications: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - text/plain
+  skills: 1
+  file: cello-agent-card.json
+skills:
+- id: cello
+  name: Cello
+  url: https://docs.cello.so/.well-known/agent-skills/cello/skill.md
+  http_status: 200
+  saved_to: ../skills/cello-referral-integration.md
+  note: >-
+    The card's single skill resolves to a real, 13,290-byte Agent Skill markdown document
+    published by Cello. It is saved verbatim in skills/ rather than being restated here.
+x-notes:
+  generator: >-
+    The card and the skill it points at are produced by Cello's Mintlify documentation project
+    (metadata.mintlify-proj = cello in the skill frontmatter), so the agent surface is
+    documentation-shaped: it describes how to integrate Cello, and does not itself accept A2A
+    tasks. The card's url is the docs site, not a message endpoint.
+  relationship_to_mcp: >-
+    Cello's executable agent surface is the hosted MCP server at https://mcp.cello.so/mcp
+    (OAuth-gated, see mcp/cello-mcp.yml). The agent card does not advertise it.
+findings:
+- id: linked-skill-serves-a-403-script-url
+  severity: high
+  detail: >-
+    The Agent Skill this card points at instructs agents to load Attribution JS from
+    https://assets.cello.so/attribution/latest/attribution.js (and the sandbox equivalent). That
+    URL returns 403. Cello's human-facing docs use cello-attribution.js, which returns 200. The
+    machine-readable path and the human path disagree, and only the machine one is broken.
+  evidence:
+  - url: https://assets.cello.so/attribution/latest/attribution.js
+    status: 403
+  - url: https://assets.cello.so/attribution/latest/cello-attribution.js
+    status: 200
+- id: card-advertises-no-executable-endpoint
+  severity: medium
+  detail: >-
+    Every URL in the card — url, provider.url, documentationUrl and supportedInterfaces[0].url —
+    is https://docs.cello.so/, the documentation site. Cello's actual agent-callable surface, the
+    OAuth-gated MCP server at https://mcp.cello.so/mcp, is not referenced anywhere in the card. An
+    A2A client that resolves this card gets documentation, not a task endpoint.
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://docs.cello.so/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 1030
+  also_probed:
+  - {url: 'https://docs.cello.so/.well-known/agent.json', http_status: 404}
+  - {url: 'https://cello.so/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://cello.so/.well-known/agent.json', http_status: 404}
+  - {url: 'https://api.cello.so/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://api.cello.so/.well-known/agent.json', http_status: 404}
+  - {url: 'https://mcp.cello.so/.well-known/agent-card.json', http_status: 404}
+  - {url: 'https://mcp.cello.so/.well-known/agent.json', http_status: 404}

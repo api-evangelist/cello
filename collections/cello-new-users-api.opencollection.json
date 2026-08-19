@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cello Events New Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "New Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /new-users/{productUserId}/reward",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cello.so/new-users/:productUserId/reward",
+            "params": [
+              {
+                "name": "productUserId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the user you want to check"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve details on eligibility for the new user reward (discount) and referral information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

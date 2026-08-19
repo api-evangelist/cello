@@ -1,0 +1,159 @@
+generated: '2026-08-13'
+method: searched
+source: https://cello.so/pricing/
+summary: >-
+  Cello publishes list prices for two separate product lines on one pricing page. User Referrals
+  is priced against referral ARR generated (success-based) and starts at a paid tier; Partner
+  Referrals is priced against partner and campaign counts and has a free tier. Prices are shown as
+  monthly, billed monthly. Several tiers display a promotional discount badge on the page, so the
+  figure recorded is the price as displayed at fetch time, not necessarily the undiscounted list
+  price. Nothing on the page is machine-readable; there is no pricing or catalog API.
+currency: USD
+billing_period: month
+plan_count: 7
+product_lines:
+- id: user-referrals
+  name: User referrals
+  positioning: For users of your product
+  pricing_basis: referral ARR generated (success-based)
+- id: partner-referrals
+  name: Partner referrals
+  positioning: For affiliates and influencers
+  pricing_basis: number of partners and partner campaigns
+plans:
+- name: Grow
+  product_line: user-referrals
+  price: 200
+  currency: USD
+  period: month
+  price_note: displayed with a "33% off" promotional badge
+  tagline: Test and grow the channel
+  quota:
+    referral_arr_included: up to $50K
+    referrals: unlimited
+  includes:
+  - All integrations
+  - All features
+  - Priority Slack support
+  - Dedicated success manager
+  - 0% currency conversion costs
+  - 0% payment transaction costs
+  cta: Get started
+- name: Scale
+  product_line: user-referrals
+  price: 750
+  currency: USD
+  period: month
+  tagline: Accelerate your referral growth
+  quota:
+    referral_arr_included: up to $100K
+    referrals: unlimited
+  includes:
+  - All integrations
+  - All features
+  - Priority Slack support
+  - Dedicated success manager
+  - Custom SLAs
+  - 0% currency conversion costs
+  - 0% payment transaction costs
+  cta: Get started
+- name: Enterprise
+  product_line: user-referrals
+  price: null
+  price_display: Custom
+  period: month
+  tagline: Enterprise scale at degrading costs
+  quota:
+    referral_arr_included: unlimited
+    referrals: unlimited
+  includes:
+  - All integrations
+  - All features
+  - Priority Slack support
+  - Dedicated success manager
+  - Custom SLAs
+  - 0% currency conversion costs
+  - 0% payment transaction costs
+  cta: Contact Sales
+- name: Free
+  product_line: partner-referrals
+  price: 0
+  currency: USD
+  period: month
+  tagline: Get started for free
+  quota:
+    referral_arr_included: unlimited
+    referrals: unlimited
+    partner_campaigns: up to 1
+    partners: up to 10
+  includes:
+  - All Partner features
+  - All integrations
+  cta: Start for free
+- name: Plus
+  product_line: partner-referrals
+  price: 200
+  currency: USD
+  period: month
+  price_note: displayed with a "33% off" promotional badge
+  tagline: Grow your Partner program
+  quota:
+    referral_arr_included: unlimited
+    referrals: unlimited
+    partner_campaigns: up to 3
+    partners: up to 50
+  includes:
+  - All Partner features
+  - All integrations
+  - Priority Slack support
+  - Dedicated success manager
+  cta: Get started
+- name: Pro
+  product_line: partner-referrals
+  price: 400
+  currency: USD
+  period: month
+  price_note: displayed with a "20% off" promotional badge
+  tagline: Scale your Partner channel
+  quota:
+    referral_arr_included: unlimited
+    referrals: unlimited
+    partner_campaigns: up to 10
+    partners: up to 250
+  includes:
+  - All Partner features
+  - All integrations
+  - Priority Slack support
+  - Dedicated success manager
+  - Custom SLAs
+  cta: Get started
+- name: Enterprise
+  product_line: partner-referrals
+  price: 1000
+  currency: USD
+  period: month
+  price_note: displayed with a "20% off" promotional badge
+  tagline: All-in Enterprise plan
+  quota:
+    referral_arr_included: unlimited
+    referrals: unlimited
+    partner_campaigns: unlimited
+    partners: unlimited
+  includes:
+  - All Partner features
+  - All integrations
+  - Priority Slack support
+  - Dedicated success manager
+  - Custom SLAs
+  cta: Get started
+api_access:
+  metered: false
+  note: >-
+    No plan on the pricing page gates or meters API, SDK, or MCP access. Every tier says "All
+    integrations" and "All features"; the pricing lever is referral ARR (user referrals) or
+    partner/campaign count (partner referrals), not API calls. No API-call quota, no request
+    overage, and no per-tier rate limit is published anywhere on the site or in the docs.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - {url: 'https://cello.so/pricing/', http_status: 200}

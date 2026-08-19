@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cello Events Referrers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Referrers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /referrers/{productUserId}/depersonalize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cello.so/referrers/:productUserId/depersonalize",
+            "params": [
+              {
+                "name": "productUserId",
+                "value": "",
+                "type": "path",
+                "description": "The product user identifier of the referrer to depersonalize"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Depersonalize a referrer record identified by productUserId."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

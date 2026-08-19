@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "93aec51b-4119-40b5-bbf8-163e36edb830",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "549fcec4-8660-4c61-89e1-23f5e2350d9c",
+          "name": "Report referral-related events such as signups, purchases, and refunds.",
+          "request": {
+            "name": "Report referral-related events such as signups, purchases, and refunds.",
+            "description": {
+              "content": "Report referral-related events such as signups, purchases, and refunds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventName\": \"<string>\",\n  \"payload\": {\n    \"ucc\": \"<string>\",\n    \"newUserId\": \"<string>\",\n    \"price\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"context\": {\n    \"event\": {\n      \"trigger\": \"<string>\",\n      \"timestamp\": \"<dateTime>\"\n    },\n    \"newUser\": {\n      \"id\": \"<string>\",\n      \"email\": \"<email>\",\n      \"name\": \"<string>\",\n      \"organizationId\": \"<string>\"\n    },\n    \"subscription\": {\n      \"id\": \"<string>\",\n      \"invoiceId\": \"<string>\",\n      \"interval\": \"<string>\",\n      \"seatsUsed\": \"<integer>\",\n      \"productKey\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "abada355-3150-4d75-93c0-83711ac09422",
+              "name": "Event accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventName\": \"ReferralUpdated\",\n  \"payload\": {\n    \"ucc\": \"cello-ucc\",\n    \"newUserId\": \"new-user-product-id\",\n    \"price\": 0,\n    \"currency\": \"\"\n  },\n  \"context\": {\n    \"newUser\": {\n      \"id\": \"new-user-id\",\n      \"email\": \"new_user@gmail.com\",\n      \"name\": \"New user name\",\n      \"organizationId\": \"org-123\"\n    },\n    \"event\": {\n      \"trigger\": \"new-signup\",\n      \"timestamp\": \"2022-10-05T14:14:34Z\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84bd08ea-1cf3-4fe8-8256-2121629b32d7",
+              "name": "Malformed or invalid data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventName\": \"ReferralUpdated\",\n  \"payload\": {\n    \"ucc\": \"cello-ucc\",\n    \"newUserId\": \"new-user-product-id\",\n    \"price\": 0,\n    \"currency\": \"\"\n  },\n  \"context\": {\n    \"newUser\": {\n      \"id\": \"new-user-id\",\n      \"email\": \"new_user@gmail.com\",\n      \"name\": \"New user name\",\n      \"organizationId\": \"org-123\"\n    },\n    \"event\": {\n      \"trigger\": \"new-signup\",\n      \"timestamp\": \"2022-10-05T14:14:34Z\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44e2d737-a333-40e2-8134-f259efcfc8a4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventName\": \"ReferralUpdated\",\n  \"payload\": {\n    \"ucc\": \"cello-ucc\",\n    \"newUserId\": \"new-user-product-id\",\n    \"price\": 0,\n    \"currency\": \"\"\n  },\n  \"context\": {\n    \"newUser\": {\n      \"id\": \"new-user-id\",\n      \"email\": \"new_user@gmail.com\",\n      \"name\": \"New user name\",\n      \"organizationId\": \"org-123\"\n    },\n    \"event\": {\n      \"trigger\": \"new-signup\",\n      \"timestamp\": \"2022-10-05T14:14:34Z\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.cello.so",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "86099826-7b80-44e5-8b4d-32ca9ac5a65f",
+    "name": "Cello Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Cello referral platform",
+      "type": "text/plain"
+    }
+  }
+}
