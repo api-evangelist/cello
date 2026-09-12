@@ -122,6 +122,8 @@ apis:
   - type: OpenAPI
     url: openapi/cello-token-api-openapi.yml
 common:
+- type: Website
+  url: https://www.cello.so/
 - type: Overlay
   url: overlays/cello-openapi-overlay.yaml
 - type: DomainSecurity
