@@ -198,6 +198,8 @@ common:
   url: plans/cello-plans-pricing.yml
 - type: RateLimits
   url: rate-limits/cello-rate-limits.yml
+- type: Contact
+  url: mailto:support@cello.so
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
