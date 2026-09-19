@@ -117,6 +117,8 @@ apis:
   humanURL: https://docs.cello.so/api-reference/introduction
   baseURL: https://api.cello.so
   tags:
+  - Tokens
+  tags_raw:
   - Token
   properties:
   - type: OpenAPI
