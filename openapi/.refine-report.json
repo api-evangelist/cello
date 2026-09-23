@@ -1,11 +1,7 @@
 {
   "provider": "cello",
   "sources": [
-    "cello-events-api-openapi.yml",
-    "cello-new-users-api-openapi.yml",
-    "cello-referral-codes-api-openapi.yml",
-    "cello-referrers-api-openapi.yml",
-    "cello-token-api-openapi.yml"
+    "_original/cello-openapi-original.json"
   ],
   "outputs": [
     "cello-events-api-openapi.yml",
@@ -17,6 +13,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "cello-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cello-openapi-original.json: tagged paths POST /token -> Token",
+    "cello-openapi-original.json: tagged paths GET /referral-codes/{code} -> Referral Codes",
+    "cello-openapi-original.json: tagged paths GET /new-users/{productUserId}/reward -> New Users",
+    "cello-openapi-original.json: tagged paths GET /referral-codes/active-link/{productUserId} -> Referral Codes",
+    "cello-openapi-original.json: tagged paths POST /referrers/{productUserId}/depersonalize -> Referrers",
+    "cello-openapi-original.json: tagged paths POST /events -> Events",
+    "cello-openapi-original.json: declared missing tag: Events",
+    "cello-openapi-original.json: declared missing tag: New Users",
+    "cello-openapi-original.json: declared missing tag: Referral Codes",
+    "cello-openapi-original.json: declared missing tag: Referrers",
+    "cello-openapi-original.json: declared missing tag: Token",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "cello-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cello-new-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cello-referral-codes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cello-referrers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cello-token-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

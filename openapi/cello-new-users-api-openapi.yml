@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Cello Events New Users API
+  title: Cello New Users API
   description: API for Cello referral platform
   license:
     name: MIT
@@ -60,6 +60,10 @@ paths:
       - bearerAuth: []
       tags:
       - New Users
+      summary: Get new users by product user id reward
+      x-summary-source: derived
+      operationId: getNewUsersByProductUserIdReward
+      x-operation-id-source: derived
 components:
   schemas:
     Error:
@@ -69,6 +73,29 @@ components:
       properties:
         message:
           type: string
+    Reward:
+      type: object
+      required:
+      - type
+      - interval
+      properties:
+        type:
+          type: string
+          enum:
+          - standard
+          - custom
+          description: '"standard" or "custom" discount type'
+        interval:
+          type: string
+          description: Always "month" (billing interval)
+        intervalCount:
+          type: number
+          nullable: true
+          description: Number of months the discount applies (null for custom)
+        percentage:
+          type: number
+          nullable: true
+          description: Discount percentage (null for standard)
     RewardEligibilityResponse:
       type: object
       required:
@@ -98,29 +125,6 @@ components:
         campaignRevision:
           type: string
           description: The campaign revision used for the reward calculation
-    Reward:
-      type: object
-      required:
-      - type
-      - interval
-      properties:
-        type:
-          type: string
-          enum:
-          - standard
-          - custom
-          description: '"standard" or "custom" discount type'
-        interval:
-          type: string
-          description: Always "month" (billing interval)
-        intervalCount:
-          type: number
-          nullable: true
-          description: Number of months the discount applies (null for custom)
-        percentage:
-          type: number
-          nullable: true
-          description: Discount percentage (null for standard)
   securitySchemes:
     bearerAuth:
       type: http

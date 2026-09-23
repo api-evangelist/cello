@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Cello Events Referral Codes API
+  title: Cello Referral Codes API
   description: API for Cello referral platform
   license:
     name: MIT
@@ -53,6 +53,10 @@ paths:
       - bearerAuth: []
       tags:
       - Referral Codes
+      summary: Get referral codes by code
+      x-summary-source: derived
+      operationId: getReferralCodesByCode
+      x-operation-id-source: derived
   /referral-codes/active-link/{productUserId}:
     get:
       description: Retrieve an active UCC and invite link for a given user to support contextual sharing.
@@ -80,22 +84,12 @@ paths:
       - bearerAuth: []
       tags:
       - Referral Codes
+      summary: Get referral codes active link by product user id
+      x-summary-source: derived
+      operationId: getReferralCodesActiveLinkByProductUserId
+      x-operation-id-source: derived
 components:
   schemas:
-    ReferralCodeValidation:
-      type: object
-      required:
-      - code
-      - valid
-      properties:
-        code:
-          type: string
-        productUserId:
-          type: string
-        valid:
-          type: boolean
-        campaignId:
-          type: string
     Error:
       type: object
       required:
@@ -115,6 +109,20 @@ components:
         link:
           type: string
           description: Full invite link
+    ReferralCodeValidation:
+      type: object
+      required:
+      - code
+      - valid
+      properties:
+        code:
+          type: string
+        productUserId:
+          type: string
+        valid:
+          type: boolean
+        campaignId:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

@@ -10,9 +10,8 @@ server:
   auth: oauth
 docs: https://docs.cello.so/mcp/connect
 tool_reference: https://docs.cello.so/mcp/tools
-enablement: >-
-  An account admin must turn the MCP server on in the Cello Portal under Integrations -> MCP and
-  copy the account's MCP Server URL before any client can connect.
+enablement: An account admin must turn the MCP server on in the Cello Portal under Integrations -> MCP
+  and copy the account's MCP Server URL before any client can connect.
 clients:
 - Claude
 - Claude Code
@@ -23,18 +22,16 @@ clients:
 - Replit
 posture:
   read_only: true
-  note: >-
-    Cello states all MCP tools are currently read-only; to make a change the assistant points the
-    user at the Cello Portal. No write tool is published, even though the protected-resource
-    metadata advertises an mcp:write scope.
+  note: Cello states all MCP tools are currently read-only; to make a change the assistant points the
+    user at the Cello Portal. No write tool is published, even though the protected-resource metadata
+    advertises an mcp:write scope.
 tools:
 - name: cello_get_program_metrics
   audience: growth
-  description: >-
-    Complete referral program metrics in one call — lifetime referrer and new-user funnel totals
-    plus ARR, pre-calculated monthly and weekly trends, weekly/monthly history time series, and
-    industry benchmarks segmented by GTM motion (Free Trial, Freemium, Demo Only, Overall) with
-    median and best-in-class lines.
+  description: Complete referral program metrics in one call — lifetime referrer and new-user funnel totals
+    plus ARR, pre-calculated monthly and weekly trends, weekly/monthly history time series, and industry
+    benchmarks segmented by GTM motion (Free Trial, Freemium, Demo Only, Overall) with median and best-in-class
+    lines.
 - name: cello_get_referrers
   audience: growth
   description: Find referrers, optionally filtered and sorted by engagement or performance metrics.
@@ -53,28 +50,24 @@ tools:
     note: 1-indexed, 10 per page
 - name: cello_get_integration_status
   audience: developer
-  description: >-
-    Health of the four integration components (referral widget, attribution widget, signup
-    tracking, purchase tracking) — per-component connectionStatus of connected,
-    connectedWithWarnings or notConnected, optional warningType, and lastEventReceived.
+  description: Health of the four integration components (referral widget, attribution widget, signup
+    tracking, purchase tracking) — per-component connectionStatus of connected, connectedWithWarnings
+    or notConnected, optional warningType, and lastEventReceived.
 - name: cello_get_events
   audience: developer
-  description: >-
-    Recent webhook and API events Cello received, newest first, with source, overall validation
+  description: Recent webhook and API events Cello received, newest first, with source, overall validation
     status, timestamp, and a per-field payload breakdown (ucc, productUserId, email, customerId).
 - name: cello_get_recommendations
   audience: both
-  description: >-
-    Prioritized best-practice recommendations grouped by activation, sharing and conversion, with
-    completed/pending status, effort and impact labels, and a top-priority callout.
+  description: Prioritized best-practice recommendations grouped by activation, sharing and conversion,
+    with completed/pending status, effort and impact labels, and a top-priority callout.
 - name: search_cello
   audience: both
   description: Search the Cello knowledge base for documentation, code examples, API references and guides.
 - name: query_docs_filesystem_cello
   audience: both
-  description: >-
-    Read-only query interface over an in-memory filesystem of the Cello documentation pages and
-    OpenAPI specs — read a page by path, exact keyword or regex search, explore the docs structure.
+  description: Read-only query interface over an in-memory filesystem of the Cello documentation pages
+    and OpenAPI specs — read a page by path, exact keyword or regex search, explore the docs structure.
 authorization:
   flow: oauth
   protected_resource_metadata: ../well-known/cello-oauth-protected-resource.json
@@ -86,33 +79,27 @@ authorization:
   dynamic_client_registration: https://auth.cello.so/oauth2/register
   pkce: S256
   ref: ../scopes/cello-scopes.yml
-  note: >-
-    RFC 9728 protected-resource metadata is served at
-    https://mcp.cello.so/.well-known/oauth-protected-resource and is what the 401 challenge points
-    clients at. Cello's docs describe the flow in prose ("your client opens a browser window...
-    there's no token to generate") and never mention the metadata document or the scopes.
+  note: RFC 9728 protected-resource metadata is served at https://mcp.cello.so/.well-known/oauth-protected-resource
+    and is what the 401 challenge points clients at. Cello's docs describe the flow in prose ("your client
+    opens a browser window... there's no token to generate") and never mention the metadata document or
+    the scopes.
 crosswalk: cello-tool-crosswalk.yml
 deployment:
   mode: remote
   endpoint: https://mcp.cello.so/mcp
-  auth: oauth
   verified: probed
-  checked: '2026-08-13'
-  note: >-
-    Remote only. Cello ships no stdio package — there is no npx or pip install path, and the
-    Claude Code instruction Cello publishes is `claude mcp add --transport http Cello
-    https://mcp.cello.so/mcp`, an HTTP remote registration.
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census
 x-evidence:
   fetched: '2026-08-13'
   probes:
   - url: https://mcp.cello.so/mcp
     http_status: 401
-    method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
-    note: >-
-      Returns WWW-Authenticate: Bearer
-      resource_metadata="https://mcp.cello.so/.well-known/oauth-protected-resource" — the endpoint
-      is live and correctly implements the MCP OAuth challenge. Tool schemas require an
-      authenticated introspection; the tool list here is Cello's published reference, not a guess.
+    method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
+    note: 'Returns WWW-Authenticate: Bearer resource_metadata="https://mcp.cello.so/.well-known/oauth-protected-resource"
+      — the endpoint is live and correctly implements the MCP OAuth challenge. Tool schemas require an
+      authenticated introspection; the tool list here is Cello''s published reference, not a guess.'
   - url: https://mcp.sandbox.cello.so/mcp
     http_status: 401
     note: sandbox MCP endpoint is live and gated the same way
