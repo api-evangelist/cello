@@ -130,6 +130,27 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    EventPayload:
+      type: object
+      required:
+      - ucc
+      - newUserId
+      properties:
+        ucc:
+          type: string
+        newUserId:
+          type: string
+        price:
+          type: number
+        currency:
+          type: string
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
     EventContext:
       type: object
       properties:
@@ -185,27 +206,6 @@ components:
               type: integer
             productKey:
               type: string
-    EventPayload:
-      type: object
-      required:
-      - ucc
-      - newUserId
-      properties:
-        ucc:
-          type: string
-        newUserId:
-          type: string
-        price:
-          type: number
-        currency:
-          type: string
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
     EventEnvelope:
       type: object
       required:

@@ -90,6 +90,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ReferralCodeValidation:
+      type: object
+      required:
+      - code
+      - valid
+      properties:
+        code:
+          type: string
+        productUserId:
+          type: string
+        valid:
+          type: boolean
+        campaignId:
+          type: string
     Error:
       type: object
       required:
@@ -109,20 +123,6 @@ components:
         link:
           type: string
           description: Full invite link
-    ReferralCodeValidation:
-      type: object
-      required:
-      - code
-      - valid
-      properties:
-        code:
-          type: string
-        productUserId:
-          type: string
-        valid:
-          type: boolean
-        campaignId:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

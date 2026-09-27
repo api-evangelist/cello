@@ -63,6 +63,7 @@ tags:
 - Attribution
 - Partner Programs
 - Ai Enterprise Software
+- A2A
 tags_raw:
 - Company
 - Referral Marketing
@@ -72,6 +73,7 @@ tags_raw:
 - Attribution
 - Partner Programs
 - Ai Enterprise Software
+- A2A
 apis:
 - aid: cello:cello-events-api
   name: Cello Events API
@@ -216,3 +218,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 11
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.cello.so/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
