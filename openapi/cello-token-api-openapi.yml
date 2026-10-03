@@ -71,24 +71,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-    RefreshTokenResponse:
-      type: object
-      properties:
-        accessToken:
-          type: string
-        expiresIn:
-          type: integer
-      required:
-      - accessToken
-      - expiresIn
-      description: Returned when exchanging a refreshToken for a new accessToken.
     RefreshTokenRequest:
       type: object
       description: Use this schema to exchange a refreshToken for a new accessToken.
@@ -107,6 +89,24 @@ components:
         accessKeyId:
           type: string
         secretAccessKey:
+          type: string
+    RefreshTokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        expiresIn:
+          type: integer
+      required:
+      - accessToken
+      - expiresIn
+      description: Returned when exchanging a refreshToken for a new accessToken.
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
           type: string
     TokenResponse:
       type: object

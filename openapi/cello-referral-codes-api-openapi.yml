@@ -104,13 +104,6 @@ components:
           type: boolean
         campaignId:
           type: string
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
     ActiveLinkResponse:
       type: object
       required:
@@ -123,6 +116,13 @@ components:
         link:
           type: string
           description: Full invite link
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

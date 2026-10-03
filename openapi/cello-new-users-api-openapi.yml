@@ -66,36 +66,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Reward:
-      type: object
-      required:
-      - type
-      - interval
-      properties:
-        type:
-          type: string
-          enum:
-          - standard
-          - custom
-          description: '"standard" or "custom" discount type'
-        interval:
-          type: string
-          description: Always "month" (billing interval)
-        intervalCount:
-          type: number
-          nullable: true
-          description: Number of months the discount applies (null for custom)
-        percentage:
-          type: number
-          nullable: true
-          description: Discount percentage (null for standard)
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
     RewardEligibilityResponse:
       type: object
       required:
@@ -125,6 +95,36 @@ components:
         campaignRevision:
           type: string
           description: The campaign revision used for the reward calculation
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+    Reward:
+      type: object
+      required:
+      - type
+      - interval
+      properties:
+        type:
+          type: string
+          enum:
+          - standard
+          - custom
+          description: '"standard" or "custom" discount type'
+        interval:
+          type: string
+          description: Always "month" (billing interval)
+        intervalCount:
+          type: number
+          nullable: true
+          description: Number of months the discount applies (null for custom)
+        percentage:
+          type: number
+          nullable: true
+          description: Discount percentage (null for standard)
   securitySchemes:
     bearerAuth:
       type: http

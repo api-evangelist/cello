@@ -130,6 +130,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
     EventPayload:
       type: object
       required:
@@ -144,13 +151,21 @@ components:
           type: number
         currency:
           type: string
-    Error:
+    EventEnvelope:
       type: object
       required:
-      - message
+      - eventName
+      - payload
+      - context
       properties:
-        message:
+        eventName:
           type: string
+          enum:
+          - ReferralUpdated
+        payload:
+          $ref: '#/components/schemas/EventPayload'
+        context:
+          $ref: '#/components/schemas/EventContext'
     EventContext:
       type: object
       properties:
@@ -206,21 +221,6 @@ components:
               type: integer
             productKey:
               type: string
-    EventEnvelope:
-      type: object
-      required:
-      - eventName
-      - payload
-      - context
-      properties:
-        eventName:
-          type: string
-          enum:
-          - ReferralUpdated
-        payload:
-          $ref: '#/components/schemas/EventPayload'
-        context:
-          $ref: '#/components/schemas/EventContext'
   securitySchemes:
     bearerAuth:
       type: http
