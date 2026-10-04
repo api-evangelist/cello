@@ -90,6 +90,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
     ReferralCodeValidation:
       type: object
       required:
@@ -116,13 +123,6 @@ components:
         link:
           type: string
           description: Full invite link
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http

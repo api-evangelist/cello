@@ -66,6 +66,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
     RewardEligibilityResponse:
       type: object
       required:
@@ -95,13 +102,6 @@ components:
         campaignRevision:
           type: string
           description: The campaign revision used for the reward calculation
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
     Reward:
       type: object
       required:

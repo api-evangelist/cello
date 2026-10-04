@@ -137,20 +137,6 @@ components:
       properties:
         message:
           type: string
-    EventPayload:
-      type: object
-      required:
-      - ucc
-      - newUserId
-      properties:
-        ucc:
-          type: string
-        newUserId:
-          type: string
-        price:
-          type: number
-        currency:
-          type: string
     EventEnvelope:
       type: object
       required:
@@ -221,6 +207,20 @@ components:
               type: integer
             productKey:
               type: string
+    EventPayload:
+      type: object
+      required:
+      - ucc
+      - newUserId
+      properties:
+        ucc:
+          type: string
+        newUserId:
+          type: string
+        price:
+          type: number
+        currency:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http
