@@ -107,3 +107,19 @@ x-evidence:
     http_status: 200
   - url: https://docs.cello.so/mcp/tools.md
     http_status: 200
+rfc9728:
+  endpoint: https://mcp.cello.so/mcp
+  metadata_url: https://mcp.cello.so/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.cello.so
+    authorization_servers:
+    - https://auth.cello.so
+    scopes_supported:
+    - mcp:read
+    - mcp:write
+    bearer_methods_supported:
+    - header
