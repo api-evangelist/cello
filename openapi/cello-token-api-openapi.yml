@@ -71,17 +71,13 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    RefreshTokenResponse:
+    Error:
       type: object
-      properties:
-        accessToken:
-          type: string
-        expiresIn:
-          type: integer
       required:
-      - accessToken
-      - expiresIn
-      description: Returned when exchanging a refreshToken for a new accessToken.
+      - message
+      properties:
+        message:
+          type: string
     RefreshTokenRequest:
       type: object
       description: Use this schema to exchange a refreshToken for a new accessToken.
@@ -89,13 +85,6 @@ components:
       - refreshToken
       properties:
         refreshToken:
-          type: string
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        message:
           type: string
     TokenRequest:
       type: object
@@ -125,6 +114,17 @@ components:
       - expiresIn
       - refreshTokenExpiresIn
       description: Returned when exchanging accessKeyId and secretAccessKey for tokens.
+    RefreshTokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        expiresIn:
+          type: integer
+      required:
+      - accessToken
+      - expiresIn
+      description: Returned when exchanging a refreshToken for a new accessToken.
   securitySchemes:
     bearerAuth:
       type: http

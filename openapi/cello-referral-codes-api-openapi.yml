@@ -90,6 +90,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ActiveLinkResponse:
+      type: object
+      required:
+      - activeUcc
+      - link
+      properties:
+        activeUcc:
+          type: string
+          description: Active referral code
+        link:
+          type: string
+          description: Full invite link
     Error:
       type: object
       required:
@@ -111,18 +123,6 @@ components:
           type: boolean
         campaignId:
           type: string
-    ActiveLinkResponse:
-      type: object
-      required:
-      - activeUcc
-      - link
-      properties:
-        activeUcc:
-          type: string
-          description: Active referral code
-        link:
-          type: string
-          description: Full invite link
   securitySchemes:
     bearerAuth:
       type: http
