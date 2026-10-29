@@ -64,6 +64,171 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cello is a company surfaced as a portfolio company of hv-capital and added to the API Evangelist network as a stub for enrichment. Sector: ai-enterprise-software. This profile is a lead awaiting the enrichment pipeline.
+Cello is an all-in-one, AI-powered referral platform for SaaS companies. It lets product teams embed in-product user referrals and run partner/affiliate programs with a few lines of code, then automates attribution, campaigns, notifications, fraud detection, and cross-border payouts. Cello ships an embeddable Referral Component and Attribution JS SDK for web plus native iOS, Android, Flutter, and React Native SDKs, a REST API for tokens, referral-code validation, events, and new-user rewards, a Growth Portal for analytics, and an official hosted MCP server exposing developer and growth-manager tools. Customers include Typeform, Miro, Descript, Pleo, and SmallPDF. Backed by HV Capital.
 
-Backed by: hv-capital
+**Areas:** Company · Referral Marketing · Affiliate Marketing · Growth · Software-as-a-Service · Attribution · Partner Programs · Ai Enterprise Software · A2A
+
+## Cello on APIs.io
+
+Everything profiled for Cello is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cello/](https://apis.io/providers/cello/)** — or go straight to one of the APIs or properties below.
+
+### APIs (6)
+
+- [Cello Events API](https://apis.io/apis/cello/cello-events-api/) — The Events API from Cello — 1 operation(s) for events.
+- [Cello New Users API](https://apis.io/apis/cello/cello-new-users-api/) — The New Users API from Cello — 1 operation(s) for new users.
+- [Cello Referral Codes API](https://apis.io/apis/cello/cello-referral-codes-api/) — The Referral Codes API from Cello — 2 operation(s) for referral codes.
+- [Cello Referrers API](https://apis.io/apis/cello/cello-referrers-api/) — The Referrers API from Cello — 1 operation(s) for referrers.
+- [Cello Token API](https://apis.io/apis/cello/cello-token-api/) — The Token API from Cello — 1 operation(s) for token.
+- [Cello Events v2 API](https://apis.io/apis/cello/cello-events-v2-api/) — The typed v2 event endpoints. One endpoint per business event.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cello](https://apis.io/servers/cello/cello/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Cello Agentic Access](https://apis.io/agentic-access/cello/cello-agentic-access/)
+
+#### JSON Schema (13)
+
+The data models the API reads and writes.
+
+- [Accepted event](https://apis.io/schemas/cello/cello-accepted-response/)
+- [ActiveLinkResponse](https://apis.io/schemas/cello/cello-active-link-response/)
+- [Demo attended request](https://apis.io/schemas/cello/cello-demo-attended-request/)
+- [EventEnvelope](https://apis.io/schemas/cello/cello-event-envelope/)
+- [Purchase created request](https://apis.io/schemas/cello/cello-purchase-created-request/)
+- [Purchase refunded request](https://apis.io/schemas/cello/cello-purchase-refunded-request/)
+- [ReferralCodeValidation](https://apis.io/schemas/cello/cello-referral-code-validation/)
+- [RefreshTokenRequest](https://apis.io/schemas/cello/cello-refresh-token-request/)
+- [RefreshTokenResponse](https://apis.io/schemas/cello/cello-refresh-token-response/)
+- [RewardEligibilityResponse](https://apis.io/schemas/cello/cello-reward-eligibility-response/)
+- [Signup created request](https://apis.io/schemas/cello/cello-signup-created-request/)
+- [TokenRequest](https://apis.io/schemas/cello/cello-token-request/)
+- [TokenResponse](https://apis.io/schemas/cello/cello-token-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Cello Context](https://apis.io/jsonld/cello/cello-context/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Cello Events API](https://apis.io/collections/cello/open-cello-events-api/)
+- [Cello Events New Users API](https://apis.io/collections/cello/open-cello-new-users-api/)
+- [Cello Events Referral Codes API](https://apis.io/collections/cello/open-cello-referral-codes-api/)
+- [Cello Events Referrers API](https://apis.io/collections/cello/open-cello-referrers-api/)
+- [Cello Events Token API](https://apis.io/collections/cello/open-cello-token-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Cello Openapi Overlay](https://apis.io/overlays/cello/cello-openapi-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Cello API Rules](https://apis.io/rules/cello/cello-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cello Authentication](https://apis.io/security/cello/cello-authentication/)
+- [Cello Domain Security](https://apis.io/security/cello/cello-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Cello Plans Pricing](https://apis.io/plans/cello/cello-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Cello Rate Limits](https://apis.io/rate-limits/cello/cello-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.cello.so/)
+- [Documentation](https://docs.cello.so)
+- [Getting started](https://docs.cello.so/integration-overview)
+- [API reference](https://docs.cello.so/api-reference/introduction)
+- [Pricing](https://cello.so/pricing/)
+- [Support](https://docs.cello.so/guides/support/faqs)
+- [Blog](https://cello.so/resources/)
+- [Compliance](https://cello.so/privacy-policy/)
+- [Terms of service](https://cello.so/terms-of-service/)
+- [Privacy policy](https://cello.so/privacy-policy/)
+- [GitHub](https://github.com/getcello)
+
+## API Evangelist rating
+
+**Kin Score 59.0** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 51.1 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 78.6 |
+| Access clarity | 77.6 |
+
+**Agent readiness 59.9** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 39.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cello/](https://apis.io/providers/cello/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cello: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cello/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
